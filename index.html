@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>યુવા સંગમ - સાથે મળીને, રાષ્ટ્ર માટે...</title>
+    <meta name="description" content="યુવા સંગમ સંમેલન - વ્યક્તિત્વ વિકાસ, નેતૃત્વ ગુણ અને રાષ્ટ્રકાર્ય માટે પ્રેરણા.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@300;400;600;700;800&family=Baloo+Bhai+2:wght@600;700;800&family=Farsan&family=Shrikhand&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Canvas for Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Ambient Music Toggle (Optional but premium) -->
+    <div class="audio-control" id="audio-toggle" title="Toggle Ambient Music">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path class="volume-on"
+                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+            <path class="volume-off hidden"
+                d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+        </svg>
+        <span class="audio-text">સંગીત</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+
+        <!-- Top Shloka / Mantra banner -->
+        <header class="top-banner">
+            <div class="shloka-text">|| ભારત માતા તમસ્તુમ્યં ||</div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="sub-header-town">ગોરવા નગર</h2>
+                <!-- Title Group with Paint Brush Effect -->
+                <div class="title-container">
+                    <h1 class="main-title">
+                        <span class="title-yuva">યુવા</span>
+                        <span class="title-sangam">સંગમ</span>
+                    </h1>
+                    <div class="brush-underline"></div>
+                </div>
+                <h2 class="subtitle">સાથે મળીને, રાષ્ટ્ર માટે...</h2>
+            </div>
+        </section>
+
+        <!-- Main Content Section: Split Layout -->
+        <section class="main-content">
+            <div class="content-grid">
+
+                <!-- Left Column: Why Join? -->
+                <div class="left-panel reveal-on-scroll">
+                    <div class="section-card">
+                        <h2 class="card-heading">
+                            <span class="heading-highlight">સંમેલનમાં</span> સહભાગી શા માટે થવું?
+                        </h2>
+
+                        <div class="features-list">
+                            <!-- Feature 1 -->
+                            <div class="feature-item">
+                                <div class="feature-icon-wrapper orange-glow">
+                                    <svg viewBox="0 0 24 24" class="feature-icon">
+                                        <!-- Personality Development: Stats & Growth -->
+                                        <path
+                                            d="M5 9.2h3V19H5V9.2zM10.5 5h3v14h-3V5zm5.5 8h3v6h-3v-6zM2 21h20v2H2v-2z" />
+                                        <circle cx="12" cy="3" r="1.5" />
+                                        <path d="M19 11.5l1.5-1.5L22 11.5M2 21" />
+                                    </svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h3>વ્યક્તિત્વ વિકાસ</h3>
+                                    <p>આપણા આંતરિક ગુણોને ખીલવીને એક ઉત્તમ અને પ્રભાવશાળી વ્યક્તિત્વનું નિર્માણ કરવું.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Feature 2 -->
+                            <div class="feature-item">
+                                <div class="feature-icon-wrapper gold-glow">
+                                    <svg viewBox="0 0 24 24" class="feature-icon">
+                                        <!-- Leadership and Discipline: Star + Shield/People -->
+                                        <path
+                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h3>નેતૃત્વ ગુણ અને શિસ્ત</h3>
+                                    <p>જીવનમાં શિસ્તનું મહત્વ સમજીને રાષ્ટ્ર સેવા માટે નેતૃત્વ ક્ષમતા વિકસાવવી.</p>
+                                </div>
+                            </div>
+
+                            <!-- Feature 3 -->
+                            <div class="feature-item">
+                                <div class="feature-icon-wrapper green-glow">
+                                    <svg viewBox="0 0 24 24" class="feature-icon">
+                                        <!-- Inspiration: Waving flag -->
+                                        <path d="M12.4 5H5v17H3V3h9.4l.6 2h7v11H13l-.6-2z" />
+                                    </svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h3>રાષ્ટ્રકાર્ય માટે પ્રેરણા</h3>
+                                    <p>દેશની ઉન્નતિ અને વિકાસ માટે સક્રિય યોગદાન આપવાની ઊર્જા અને પ્રેરણા મેળવવી.</p>
+                                </div>
+                            </div>
+
+                            <!-- Feature 4 -->
+                            <div class="feature-item">
+                                <div class="feature-icon-wrapper blue-glow">
+                                    <svg viewBox="0 0 24 24" class="feature-icon">
+                                        <!-- Resolve/Capability: Open Book with Torch -->
+                                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+                                        <path d="M22 12.97l-10 5.45-10-5.45V18l10 5.5 10-5.5v-5.03z" />
+                                    </svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h3>સંસ્કારી અને સક્ષમ યુવક ઘડવાનો સંકલ્પ</h3>
+                                    <p>નૈતિક મૂલ્યો અને આધુનિક કૌશલ્યો સાથે સક્ષમ યુવા પેઢીનું ઘડતર કરવાનો અડગ નિર્ધાર.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Bharat Mata Visual -->
+                <div class="right-panel reveal-on-scroll delay-1">
+                    <div class="image-container-3d">
+                        <div class="glowing-halo"></div>
+                        <img src="assets/images/bharat_mata.png" alt="Bharat Mata" class="bharat-mata-img">
+                        <div class="floating-sparkles"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Mission / Goal Section -->
+        <section class="mission-section reveal-on-scroll">
+            <h2 class="section-title">ધ્યેય:</h2>
+            <div class="mission-grid">
+
+                <!-- Mission Card 1: Dharma -->
+                <div class="mission-card saffron-theme">
+                    <div class="mission-icon">ॐ</div>
+                    <h3>ધર્મ આપણી ઓળખ છે...</h3>
+                    <p>આપણા સનાતન મૂલ્યો, કર્તવ્ય અને નૈતિકતા એ આપણી મૂળભૂત ઓળખ છે.</p>
+                    <div class="card-border-glow"></div>
+                </div>
+
+                <!-- Mission Card 2: Culture -->
+                <div class="mission-card white-theme">
+                    <div class="mission-icon">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+                            <!-- Lotus / Cultural temple symbol -->
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.4z" />
+                        </svg>
+                    </div>
+                    <h3>સંસ્કૃતિ આપણો વારસો છે...</h3>
+                    <p>આપણી ભવ્ય સંસ્કૃતિ અને સમૃદ્ધ વારસો એ આપણું સૌથી મોટું ગૌરવ છે.</p>
+                    <div class="card-border-glow"></div>
+                </div>
+
+                <!-- Mission Card 3: Nation -->
+                <div class="mission-card green-theme">
+                    <div class="mission-icon">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+                            <!-- India Map / Flag silhouette -->
+                            <path
+                                d="M12 2L2 22h20L12 2zm0 3.99L19.53 19H4.47L12 5.99zM13 16h-2v2h2v-2zm0-6h-2v4h2v-4z" />
+                        </svg>
+                    </div>
+                    <h3>રાષ્ટ્ર આપણું કર્તવ્ય છે...</h3>
+                    <p>રાષ્ટ્ર પ્રત્યે સમર્પણ અને દેશસેવા એ આપણું પરમ કર્તવ્ય છે.</p>
+                    <div class="card-border-glow"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Quote Section with Brush Effect -->
+        <section class="quote-section reveal-on-scroll">
+            <div class="quote-container">
+                <div class="quote-bg-brush"></div>
+                <div class="quote-content">
+                    <p class="quote-text">"યુવા કેવળ ભવિષ્ય નથી, વર્તમાન ની શક્તિ છે.."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Youngsters Banner Section -->
+        <section class="youngsters-section reveal-on-scroll">
+            <div class="youngsters-container">
+                <img src="assets/images/youngsters.png" alt="Youngsters of India looking at sunrise"
+                    class="youngsters-img">
+                <div class="youngsters-glow-overlay"></div>
+            </div>
+        </section>
+
+        <!-- Date Reveal Section (Interactive) -->
+        <section class="reveal-section reveal-on-scroll">
+            <div class="reveal-box">
+                <div class="sparkle-fireworks"></div>
+                <h2 class="reveal-title">DATE REVEAL SOON</h2>
+                <p class="reveal-subtext">ભવ્ય સંમેલનની તારીખ ટૂંક સમયમાં જાહેર કરવામાં આવશે.</p>
+
+                <div class="interactive-action">
+                    <button class="action-btn" id="notify-btn">
+                        <span class="btn-text">મને અપડેટ આપો!</span>
+                        <span class="btn-glow"></span>
+                    </button>
+                    <!-- Small interactive game / scratch card or secret indicator -->
+                    <p class="teaser-hint" id="teaser-hint">ગ્લોઇંગ બટન પર ક્લિક કરો!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-pillars">
+                <div class="pillar">
+                    <span class="pillar-icon">🚩</span>
+                    <span class="pillar-text">સેવા</span>
+                </div>
+                <div class="divider">|</div>
+                <div class="pillar">
+                    <span class="pillar-icon">🪷</span>
+                    <span class="pillar-text">સંસ્કાર</span>
+                </div>
+                <div class="divider">|</div>
+                <div class="pillar">
+                    <span class="pillar-icon">☀️</span>
+                    <span class="pillar-text">સંગઠન</span>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2026 યુવા સંગમ. રાષ્ટ્ર સેવામાં સમર્પિત.</p>
+        </footer>
+    </div>
+
+    <!-- Notification Modal / Alert -->
+    <div class="notification-modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-icon">🚩</div>
+            <h3>અભિનંદન!</h3>
+            <p>તમે રાષ્ટ્ર સેવાની આ યાત્રામાં જોડાઈ ગયા છો. તારીખ જાહેર થતાં જ તમને અપડેટ મળશે.</p>
+            <button class="close-btn" id="close-modal">બંધ કરો</button>
+        </div>
+    </div>
+
+    <!-- Background Audio (Patriotic Instrumental) -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <!-- Default fallback instrumentals can be loaded from standard royalty free sources, using a placeholder for now -->
+    </audio>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
