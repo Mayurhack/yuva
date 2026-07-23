@@ -203,7 +203,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             try {
                 if (!supabase) {
-                    throw new Error("Supabase is not initialized. Please check your internet connection.");
+                    let missing = [];
+                    if (!window.supabase) missing.push("Supabase library SDK (CDN) did not load");
+                    if (typeof CONFIG === 'undefined') missing.push("config.js file did not load");
+                    throw new Error("Initialization failed: " + missing.join(" and "));
                 }
                 // Insert into Supabase registrations table
                 const { error } = await supabase.from('registrations').insert([
