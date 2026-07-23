@@ -1,12 +1,14 @@
 // Initialize Supabase Client safely
 let supabase = null;
-if (window.supabase) {
-    const supabaseUrl = 'https://vxjfoekhmxbxwhxrmgzv.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4amZvZWtobXhieHdoeHJtZ3p2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzY1NzQsImV4cCI6MjEwMDM1MjU3NH0.CBTHcCnnu88WLRiGF8Us8sOd6ANa3YRjyjgDR_5VfdE';
-    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+if (window.supabase && typeof CONFIG !== 'undefined') {
+    supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
     window.supabaseClient = supabase;
 } else {
-    console.error("Supabase CDN failed to load. Check your internet connection.");
+    if (!window.supabase) {
+        console.error("Supabase CDN failed to load. Check your internet connection.");
+    } else {
+        console.warn("CONFIG is missing. Please make sure config.js is loaded.");
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
