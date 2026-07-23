@@ -306,35 +306,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     let ytPlayerReady = false;
     let ytPlayer;
-
+ 
     function playMusic() {
-        if (!ytPlayerReady || !ytPlayer || isPlaying) return;
-        
+        if (!ytPlayerReady || !ytPlayer) return;
         try {
             ytPlayer.playVideo();
-            volOnIcon.classList.remove('hidden');
-            volOffIcon.classList.add('hidden');
-            isPlaying = true;
         } catch (e) {
-            console.log("Autoplay blocked by browser. Waiting for interaction.");
+            console.log("Play video attempt failed:", e);
         }
     }
-
+ 
     function pauseMusic() {
-        if (!ytPlayerReady || !ytPlayer || !isPlaying) return;
-        
+        if (!ytPlayerReady || !ytPlayer) return;
         try {
             ytPlayer.pauseVideo();
-            volOnIcon.classList.add('hidden');
-            volOffIcon.classList.remove('hidden');
-            isPlaying = false;
         } catch (e) {
-            console.error("Error pausing video:", e);
+            console.error("Pause video attempt failed:", e);
         }
     }
-
+ 
     // Play audio on first user interaction if autoplay is blocked
-    const autoPlayEvents = ['click', 'touchstart', 'scroll', 'keydown'];
+    const autoPlayEvents = ['click', 'touchstart', 'keydown', 'mousedown'];
     function playOnInteraction() {
         if (!isPlaying) {
             playMusic();
@@ -344,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.removeEventListener(event, playOnInteraction);
         });
     }
-
+ 
     function initYTPlayer() {
         if (ytPlayerReady || ytPlayer) return;
         ytPlayer = new YT.Player('yt-player', {
@@ -366,6 +358,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     autoPlayEvents.forEach(event => {
                         window.addEventListener(event, playOnInteraction, { passive: true });
                     });
+                },
+                'onStateChange': (event) => {
+                    if (event.data === YT.PlayerState.PLAYING) {
+                        isPlaying = true;
+                        volOnIcon.classList.remove('hidden');
+                        volOffIcon.classList.add('hidden');
+                        // Clean up interaction listeners since audio is successfully playing
+                        autoPlayEvents.forEach(ev => {
+                            window.removeEventListener(ev, playOnInteraction);
+                        });
+                    } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                        isPlaying = false;
+                        volOnIcon.classList.add('hidden');
+                        volOffIcon.classList.remove('hidden');
+                    }
                 }
             }
         });
