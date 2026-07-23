@@ -274,13 +274,17 @@ body::after {
 }
 
 .sub-header-town {
-    font-family: 'Baloo Bhai 2', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--gold);
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    text-shadow: 0 1px 3px rgba(212, 136, 6, 0.15);
+    font-family: 'Shrikhand', 'Farsan', cursive;
+    font-size: 3.4rem;
+    font-weight: 700;
+    color: transparent;
+    background: linear-gradient(135deg, var(--saffron-bright), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    display: inline-block;
+    filter: drop-shadow(0 2px 5px rgba(255, 110, 0, 0.15));
 }
 
 .subtitle {
