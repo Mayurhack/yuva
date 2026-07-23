@@ -230,6 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Get form values
             const name = regForm.querySelector('#reg-name') ? regForm.querySelector('#reg-name').value : '';
             const contact = regForm.querySelector('#reg-contact') ? regForm.querySelector('#reg-contact').value : '';
+            const email = regForm.querySelector('#reg-email') ? regForm.querySelector('#reg-email').value : '';
+            const gender = regForm.querySelector('#reg-gender') ? regForm.querySelector('#reg-gender').value : '';
             const occupation = regForm.querySelector('#reg-occupation') ? regForm.querySelector('#reg-occupation').value : '';
             const dob = regForm.querySelector('#reg-dob') ? regForm.querySelector('#reg-dob').value : '';
             const address = regForm.querySelector('#reg-address') ? regForm.querySelector('#reg-address').value : '';
@@ -255,6 +257,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     database.collection("registrations").add({
                         name,
                         contact,
+                        email,
+                        gender,
                         occupation,
                         dob,
                         address,

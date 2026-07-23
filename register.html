@@ -87,6 +87,19 @@
                         <input type="tel" id="reg-contact" required placeholder="૧૦ આંકડાનો મોબાઇલ નંબર" pattern="[0-9]{10}">
                     </div>
                     <div class="form-group">
+                        <label for="reg-email">ઇમેઇલ (Email)</label>
+                        <input type="email" id="reg-email" required placeholder="તમારું ઇમેઇલ સરનામું લખો">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-gender">લિંગ (Gender)</label>
+                        <select id="reg-gender" required>
+                            <option value="" disabled selected>લિંગ પસંદ કરો (Select Gender)</option>
+                            <option value="Male">પુરુષ (Male)</option>
+                            <option value="Female">સ્ત્રી (Female)</option>
+                            <option value="Other">અન્ય (Other)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="reg-occupation">અભ્યાસ / વ્યવસાય (Education / Occupation)</label>
                         <input type="text" id="reg-occupation" required placeholder="તમારો અભ્યાસ અથવા વ્યવસાય">
                     </div>
@@ -161,6 +174,8 @@
                     
                     const name = document.getElementById('reg-name') ? document.getElementById('reg-name').value : '';
                     const contact = document.getElementById('reg-contact') ? document.getElementById('reg-contact').value : '';
+                    const email = document.getElementById('reg-email') ? document.getElementById('reg-email').value : '';
+                    const gender = document.getElementById('reg-gender') ? document.getElementById('reg-gender').value : '';
                     const occupation = document.getElementById('reg-occupation') ? document.getElementById('reg-occupation').value : '';
                     const dob = document.getElementById('reg-dob') ? document.getElementById('reg-dob').value : '';
                     const address = document.getElementById('reg-address') ? document.getElementById('reg-address').value : '';
@@ -192,6 +207,8 @@
                             database.collection("registrations").add({
                                 name,
                                 contact,
+                                email,
+                                gender,
                                 occupation,
                                 dob,
                                 address,

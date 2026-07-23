@@ -947,6 +947,7 @@ body::after {
 }
 
 .form-group input,
+.form-group select,
 .form-group textarea {
     width: 100%;
     padding: 10px 15px;
@@ -960,6 +961,7 @@ body::after {
 }
 
 .form-group input:focus,
+.form-group select:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: var(--saffron-bright);
