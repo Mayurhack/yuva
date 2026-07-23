@@ -156,7 +156,7 @@ body::after {
 }
 
 .nav-logo-img {
-    height: 40px;
+    height: 50px;
     width: auto;
     filter: drop-shadow(0 2px 5px rgba(255, 119, 0, 0.15));
 }
@@ -253,7 +253,7 @@ body::after {
 }
 
 .main-logo {
-    max-width: 420px;
+    max-width: 580px;
     width: 100%;
     height: auto;
     display: block;
@@ -1160,13 +1160,13 @@ body::after {
     }
     
     .main-logo {
-        max-width: 340px;
+        max-width: 460px;
     }
 }
 
 @media (max-width: 600px) {
     .main-logo {
-        max-width: 270px;
+        max-width: 360px;
     }
     
     .subtitle {
