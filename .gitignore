@@ -1,1 +1,3 @@
-firebase-config.js
+git add firebase-config.js
+git commit -m "deploy: include firebase config in git"
+git push
