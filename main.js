@@ -1,18 +1,48 @@
-// Initialize Firebase safely
+// Initialize Firebase safely (supports both local config file and Vercel Environment Variables API fallback)
 let db = null;
-if (window.firebase && typeof firebaseConfig !== 'undefined') {
-    try {
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
+window.firebaseDBPromise = new Promise((resolve) => {
+    if (window.firebase && typeof firebaseConfig !== 'undefined') {
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.firestore();
+            window.firebaseDB = db;
+            resolve(db);
+        } catch (err) {
+            console.error("Firebase initialization error:", err);
+            resolve(null);
         }
-        db = firebase.firestore();
-        window.firebaseDB = db;
-    } catch (err) {
-        console.error("Firebase initialization error:", err);
+    } else if (window.firebase) {
+        // Try fetching configuration from Vercel Serverless Function fallback
+        fetch('/api/config')
+            .then(res => {
+                if (!res.ok) throw new Error("Status " + res.status);
+                return res.json();
+            })
+            .then(config => {
+                if (config && config.apiKey && config.apiKey !== "YOUR_API_KEY" && config.apiKey !== "") {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(config);
+                    }
+                    db = firebase.firestore();
+                    window.firebaseDB = db;
+                    console.log("Firebase initialized successfully using Vercel configuration.");
+                    resolve(db);
+                } else {
+                    console.warn("Firebase config fetched from API is empty or placeholder. Running in simulator mode.");
+                    resolve(null);
+                }
+            })
+            .catch(err => {
+                console.warn("Firebase config is missing locally and API fetch failed (this is expected in local development if offline or API not running). Running in simulator mode:", err.message);
+                resolve(null);
+            });
+    } else {
+        console.warn("Firebase SDK not loaded. Running in simulator mode.");
+        resolve(null);
     }
-} else {
-    console.warn("Firebase SDK not loaded or firebaseConfig is missing. Running in simulator mode.");
-}
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Particle Canvas Setup
@@ -220,25 +250,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 regForm.reset();
             };
 
-            if (db) {
-                db.collection("registrations").add({
-                    name,
-                    contact,
-                    occupation,
-                    dob,
-                    address,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                })
-                .then(() => {
+            const submitRegistration = (database) => {
+                if (database) {
+                    database.collection("registrations").add({
+                        name,
+                        contact,
+                        occupation,
+                        dob,
+                        address,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                    .then(() => {
+                        handleSuccess();
+                    })
+                    .catch((error) => {
+                        console.error("Error saving registration to Firebase:", error);
+                        alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી: " + error.message);
+                    });
+                } else {
+                    console.log("Firebase database not active. Saving registration locally (simulated).");
                     handleSuccess();
-                })
-                .catch((error) => {
-                    console.error("Error saving registration to Firebase:", error);
-                    alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી: " + error.message);
-                });
+                }
+            };
+
+            if (window.firebaseDBPromise) {
+                window.firebaseDBPromise.then(submitRegistration);
             } else {
-                console.log("Firebase database not active. Saving registration locally (simulated).");
-                handleSuccess();
+                submitRegistration(db);
             }
         });
     }
