@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Set up event listeners for interaction fallback
         autoPlayEvents.forEach(event => {
-            window.addEventListener(event, playOnInteraction, { passive: true });
+            window.addEventListener(event, playOnInteraction);
         });
     }
  
