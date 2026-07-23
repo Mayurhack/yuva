@@ -60,6 +60,42 @@
             </div>
         </section>
 
+        <!-- Registration Modal -->
+        <div class="notification-modal" id="reg-modal">
+            <div class="modal-content registration-content">
+                <span class="close-icon-btn" id="close-reg-modal">&times;</span>
+                <div class="modal-icon">🚩</div>
+                <h3>યુવા સંગમ નોંધણી</h3>
+                <form id="reg-form" class="registration-form">
+                    <div class="form-group">
+                        <label for="reg-name">નામ (Name)</label>
+                        <input type="text" id="reg-name" required placeholder="તમારું પૂરું નામ લખો">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-contact">સંપર્ક સૂત્ર (Mobile Number)</label>
+                        <input type="tel" id="reg-contact" required placeholder="૧૦ આંકડાનો મોબાઇલ નંબર"
+                            pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-occupation">અભ્યાસ / વ્યવસાય (Education / Occupation)</label>
+                        <input type="text" id="reg-occupation" required placeholder="તમારો અભ્યાસ અથવા વ્યવસાય">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-dob">જન્મ તારીખ (Date of Birth)</label>
+                        <input type="date" id="reg-dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-address">સરનામું (Address)</label>
+                        <textarea id="reg-address" required placeholder="તમારું પૂરું સરનામું લખો" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="action-btn form-submit-btn">
+                        <span class="btn-text">સબમિટ કરો</span>
+                        <span class="btn-glow"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <!-- Main Content Section: Split Layout -->
         <section class="main-content" id="features">
             <div class="content-grid">
@@ -85,8 +121,7 @@
                                 </div>
                                 <div class="feature-text">
                                     <h3>વ્યક્તિત્વ વિકાસ</h3>
-                                    <p>આપણા આંતરિક ગુણોને ખીલવીને એક ઉત્તમ અને પ્રભાવશાળી વ્યક્તિત્વનું નિર્માણ કરવું.
-                                    </p>
+                                    <p><strong>આપણા આંતરિક ગુણોને ખીલવીને એક ઉત્તમ અને પ્રભાવશાળી વ્યક્તિત્વનું નિર્માણ કરવું.</strong></p>
                                 </div>
                             </div>
 
@@ -101,7 +136,7 @@
                                 </div>
                                 <div class="feature-text">
                                     <h3>નેતૃત્વ ગુણ અને શિસ્ત</h3>
-                                    <p>જીવનમાં શિસ્તનું મહત્વ સમજીને રાષ્ટ્ર સેવા માટે નેતૃત્વ ક્ષમતા વિકસાવવી.</p>
+                                    <p><strong>જીવનમાં શિસ્તનું મહત્વ સમજીને રાષ્ટ્ર સેવા માટે નેતૃત્વ ક્ષમતા વિકસાવવી.</strong></p>
                                 </div>
                             </div>
 
@@ -115,7 +150,7 @@
                                 </div>
                                 <div class="feature-text">
                                     <h3>રાષ્ટ્રકાર્ય માટે પ્રેરણા</h3>
-                                    <p>દેશની ઉન્નતિ અને વિકાસ માટે સક્રિય યોગદાન આપવાની ઊર્જા અને પ્રેરણા મેળવવી.</p>
+                                    <p><strong>દેશની ઉન્નતિ અને વિકાસ માટે સક્રિય યોગદાન આપવાની ઊર્જા અને પ્રેરણા મેળવવી.</strong></p>
                                 </div>
                             </div>
 
@@ -159,7 +194,7 @@
                 <div class="mission-card saffron-theme">
                     <div class="mission-icon">ॐ</div>
                     <h3>ધર્મ આપણી ઓળખ છે...</h3>
-                    <p>આપણા સનાતન મૂલ્યો, કર્તવ્ય અને નૈતિકતા એ આપણી મૂળભૂત ઓળખ છે.</p>
+                    <p><strong>આપણા સનાતન મૂલ્યો, કર્તવ્ય અને નૈતિકતા એ આપણી મૂળભૂત ઓળખ છે.</strong></p>
                     <div class="card-border-glow"></div>
                 </div>
 
@@ -173,7 +208,7 @@
                         </svg>
                     </div>
                     <h3>સંસ્કૃતિ આપણો વારસો છે...</h3>
-                    <p>આપણી ભવ્ય સંસ્કૃતિ અને સમૃદ્ધ વારસો એ આપણું સૌથી મોટું ગૌરવ છે.</p>
+                    <p><strong>આપણી ભવ્ય સંસ્કૃતિ અને સમૃદ્ધ વારસો એ આપણું સૌથી મોટું ગૌરવ છે.</strong></p>
                     <div class="card-border-glow"></div>
                 </div>
 
@@ -187,7 +222,7 @@
                         </svg>
                     </div>
                     <h3>રાષ્ટ્ર આપણું કર્તવ્ય છે...</h3>
-                    <p>રાષ્ટ્ર પ્રત્યે સમર્પણ અને દેશસેવા એ આપણું પરમ કર્તવ્ય છે.</p>
+                    <p><strong>રાષ્ટ્ર પ્રત્યે સમર્પણ અને દેશસેવા એ આપણું પરમ કર્તવ્ય છે.</strong></p>
                     <div class="card-border-glow"></div>
                 </div>
 
@@ -268,41 +303,7 @@
         </div>
     </div>
 
-    <!-- Registration Modal -->
-    <div class="notification-modal" id="reg-modal">
-        <div class="modal-content registration-content">
-            <span class="close-icon-btn" id="close-reg-modal">&times;</span>
-            <div class="modal-icon">🚩</div>
-            <h3>યુવા સંગમ નોંધણી</h3>
-            <form id="reg-form" class="registration-form">
-                <div class="form-group">
-                    <label for="reg-name">નામ (Name)</label>
-                    <input type="text" id="reg-name" required placeholder="તમારું પૂરું નામ લખો">
-                </div>
-                <div class="form-group">
-                    <label for="reg-contact">સંપર્ક સૂત્ર (Mobile Number)</label>
-                    <input type="tel" id="reg-contact" required placeholder="૧૦ આંકડાનો મોબાઇલ નંબર"
-                        pattern="[0-9]{10}">
-                </div>
-                <div class="form-group">
-                    <label for="reg-occupation">અભ્યાસ / વ્યવસાય (Education / Occupation)</label>
-                    <input type="text" id="reg-occupation" required placeholder="તમારો અભ્યાસ અથવા વ્યવસાય">
-                </div>
-                <div class="form-group">
-                    <label for="reg-dob">જન્મ તારીખ (Date of Birth)</label>
-                    <input type="date" id="reg-dob" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-address">સરનામું (Address)</label>
-                    <textarea id="reg-address" required placeholder="તમારું પૂરું સરનામું લખો" rows="3"></textarea>
-                </div>
-                <button type="submit" class="action-btn form-submit-btn">
-                    <span class="btn-text">સબમિટ કરો</span>
-                    <span class="btn-glow"></span>
-                </button>
-            </form>
-        </div>
-    </div>
+
 
     <!-- Invitation Success Modal -->
     <div class="notification-modal" id="invite-modal">
@@ -344,4 +345,5 @@
     <script src="firebase-config.js"></script>
     <script src="main.js"></script>
 </body>
+
 </html>
