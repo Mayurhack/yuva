@@ -74,6 +74,7 @@ body::after {
 
 /* Audio Control */
 .audio-control {
+    display: none !important;
     position: fixed;
     top: 20px;
     right: 20px;
