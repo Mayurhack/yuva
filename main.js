@@ -269,6 +269,44 @@ document.addEventListener('DOMContentLoaded', () => {
     let ytPlayerReady = false;
     let ytPlayer;
 
+    function playMusic() {
+        if (!ytPlayerReady || !ytPlayer || isPlaying) return;
+        
+        try {
+            ytPlayer.playVideo();
+            volOnIcon.classList.remove('hidden');
+            volOffIcon.classList.add('hidden');
+            isPlaying = true;
+        } catch (e) {
+            console.log("Autoplay blocked by browser. Waiting for interaction.");
+        }
+    }
+
+    function pauseMusic() {
+        if (!ytPlayerReady || !ytPlayer || !isPlaying) return;
+        
+        try {
+            ytPlayer.pauseVideo();
+            volOnIcon.classList.add('hidden');
+            volOffIcon.classList.remove('hidden');
+            isPlaying = false;
+        } catch (e) {
+            console.error("Error pausing video:", e);
+        }
+    }
+
+    // Play audio on first user interaction if autoplay is blocked
+    const autoPlayEvents = ['click', 'touchstart', 'scroll', 'keydown'];
+    function playOnInteraction() {
+        if (!isPlaying) {
+            playMusic();
+        }
+        // Remove listeners after first interaction attempt
+        autoPlayEvents.forEach(event => {
+            window.removeEventListener(event, playOnInteraction);
+        });
+    }
+
     function initYTPlayer() {
         if (ytPlayerReady || ytPlayer) return;
         ytPlayer = new YT.Player('yt-player', {
@@ -284,6 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 'onReady': () => {
                     ytPlayerReady = true;
                     ytPlayer.setVolume(35);
+                    // Try to play immediately on ready
+                    playMusic();
+                    // Set up event listeners for interaction fallback
+                    autoPlayEvents.forEach(event => {
+                        window.addEventListener(event, playOnInteraction, { passive: true });
+                    });
                 }
             }
         });
@@ -313,15 +357,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (isPlaying) {
-                ytPlayer.pauseVideo();
-                volOnIcon.classList.add('hidden');
-                volOffIcon.classList.remove('hidden');
-                isPlaying = false;
+                pauseMusic();
             } else {
-                ytPlayer.playVideo();
-                volOnIcon.classList.remove('hidden');
-                volOffIcon.classList.add('hidden');
-                isPlaying = true;
+                playMusic();
             }
         });
     }
