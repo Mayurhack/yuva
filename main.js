@@ -314,13 +314,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const autoPlayEvents = ['click', 'touchstart', 'keydown', 'mousedown'];
     function playOnInteraction() {
         if (audioPlayer) {
-            // Unmute if muted
-            if (audioPlayer.muted) {
-                audioPlayer.muted = false;
-            }
-            if (!isPlaying) {
-                playMusic();
-            }
+            audioPlayer.muted = false;
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+            }).catch(err => {
+                console.log("Interaction play failed:", err.message);
+            });
         }
         // Remove listeners after first interaction attempt
         autoPlayEvents.forEach(event => {
