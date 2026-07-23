@@ -7,30 +7,47 @@
 }
 
 :root {
-    --bg-dark: #0f0a05;
-    --bg-card: rgba(30, 20, 10, 0.7);
-    --saffron: #ff7700;
-    --saffron-bright: #ff9933;
-    --gold: #ffc400;
-    --gold-glow: rgba(255, 196, 0, 0.4);
-    --green: #138808;
-    --green-glow: rgba(19, 136, 8, 0.4);
-    --navy: #0a1128;
-    --navy-light: #1c3d5a;
+    --bg-dark: #120a02;
+    --bg-card: #fffbf5;
+    --saffron: #e65c00;
+    --saffron-bright: #ff6f00;
+    --gold: #d48806;
+    --gold-glow: rgba(212, 136, 6, 0.2);
+    --green: #118007;
+    --green-glow: rgba(17, 128, 7, 0.2);
+    --navy: #002b49;
+    --navy-light: #104f7c;
     --white: #ffffff;
-    --text-color: #f5eae0;
-    --text-muted: #d1bda7;
+    --text-color: #2c1a0e;
+    --text-muted: #614d3c;
     --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 body {
     font-family: 'Anek Gujarati', 'Poppins', sans-serif;
-    background: radial-gradient(circle at top, #ff7b00 0%, #a82e00 50%, #170500 100%);
+    background: radial-gradient(circle at top, #ffffff 0%, #fff6ec 50%, #fcefe3 100%);
     background-attachment: fixed;
     color: var(--text-color);
     overflow-x: hidden;
     min-height: 100vh;
     line-height: 1.6;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35vh;
+    background-image: url('assets/images/youngsters.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    opacity: 0.05;
+    z-index: -1;
+    pointer-events: none;
+    filter: brightness(0);
 }
 
 /* Background Particle Canvas */
@@ -61,8 +78,8 @@ body {
     top: 20px;
     right: 20px;
     z-index: 100;
-    background: rgba(255, 119, 0, 0.2);
-    border: 1px solid rgba(255, 196, 0, 0.4);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 119, 0, 0.25);
     padding: 10px 18px;
     border-radius: 30px;
     display: flex;
@@ -71,14 +88,15 @@ body {
     cursor: pointer;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(139, 92, 26, 0.1);
+    color: var(--text-color);
 }
 
 .audio-control:hover {
     background: var(--saffron);
     color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 119, 0, 0.4);
+    box-shadow: 0 6px 20px rgba(255, 119, 0, 0.3);
 }
 
 .audio-text {
@@ -104,8 +122,118 @@ body {
     font-weight: 700;
     color: var(--saffron-bright);
     letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba(255, 119, 0, 0.5);
+    text-shadow: none;
     animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Navigation Bar */
+.main-navbar {
+    background: rgba(255, 251, 245, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(230, 92, 0, 0.25);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    padding: 12px 0;
+    transition: var(--transition);
+    box-shadow: 0 4px 25px rgba(230, 92, 0, 0.12);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.nav-logo-img {
+    height: 40px;
+    width: auto;
+    filter: drop-shadow(0 2px 5px rgba(255, 119, 0, 0.15));
+}
+
+.nav-brand-text {
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--saffron-bright);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--saffron-bright);
+}
+
+.nav-register-btn {
+    text-decoration: none;
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--saffron), #ff3300);
+    padding: 10px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(255, 51, 0, 0.35);
+    transition: var(--transition);
+    border: none;
+    display: inline-block;
+}
+
+.nav-register-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 51, 0, 0.5);
+    color: var(--white);
+}
+
+/* Make sure mobile layout is handled nicely */
+@media (max-width: 600px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    
+    .nav-links {
+        gap: 15px;
+    }
+    
+    .nav-brand-text {
+        font-size: 1.3rem;
+    }
+    
+    .nav-link, .nav-register-btn {
+        font-size: 0.95rem;
+    }
+    
+    .nav-register-btn {
+        padding: 8px 18px;
+    }
 }
 
 /* Hero Section */
@@ -117,20 +245,32 @@ body {
     padding: 40px 0 20px 0;
 }
 
-.title-container {
+.logo-container {
     position: relative;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    perspective: 1000px;
 }
 
-.main-title {
-    font-family: 'Baloo Bhai 2', sans-serif;
-    font-size: 5rem;
-    font-weight: 800;
-    line-height: 1.1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.main-logo {
+    max-width: 420px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 8px 16px rgba(255, 110, 0, 0.1));
+    transition: var(--transition);
+    animation: floatLogo 4s ease-in-out infinite;
+}
+
+.main-logo:hover {
+    transform: scale(1.03) rotate(-1.5deg);
+    filter: drop-shadow(0 12px 24px rgba(255, 110, 0, 0.18));
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(0.5deg); }
 }
 
 .sub-header-town {
@@ -140,51 +280,16 @@ body {
     color: var(--gold);
     letter-spacing: 1px;
     margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(255, 196, 0, 0.6);
-}
-
-.title-yuva {
-    color: var(--saffron-bright);
-    background: linear-gradient(135deg, #ff9933, #ff3300);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 8px rgba(255, 51, 0, 0.5));
-    transform: rotate(-3deg) translateY(-5px);
-    display: inline-block;
-    font-size: 6.5rem;
-    font-family: 'Farsan', cursive;
-}
-
-.title-sangam {
-    color: #4a90e2;
-    background: linear-gradient(135deg, #a1c4fd, #004e92);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 8px rgba(0, 78, 146, 0.5));
-    margin-top: -30px;
-    font-size: 5rem;
-    transform: translateY(5px);
-    letter-spacing: 2px;
-    font-family: 'Farsan', cursive;
-}
-
-.brush-underline {
-    position: absolute;
-    bottom: -15px;
-    left: 10%;
-    width: 80%;
-    height: 8px;
-    background: linear-gradient(90deg, transparent, var(--saffron), var(--gold), transparent);
-    border-radius: 50%;
-    box-shadow: 0 2px 10px var(--gold-glow);
+    text-shadow: 0 1px 3px rgba(212, 136, 6, 0.15);
 }
 
 .subtitle {
-    font-size: 1.8rem;
-    color: var(--text-color);
-    margin-top: 25px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.9rem;
+    color: var(--navy-light);
+    margin-top: 20px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     position: relative;
     display: inline-block;
 }
@@ -192,12 +297,13 @@ body {
 .subtitle::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
-    height: 2px;
-    background-color: var(--gold);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--saffron), var(--gold), var(--saffron));
+    border-radius: 2px;
 }
 
 /* Main Content Grid */
@@ -216,28 +322,29 @@ body {
 /* Left Panel - Section Card */
 .section-card {
     background: var(--bg-card);
-    border: 1px solid rgba(255, 119, 0, 0.15);
+    border: 1px solid rgba(230, 92, 0, 0.25);
     border-radius: 24px;
     padding: 40px;
     backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 
-                inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 12px 35px rgba(230, 92, 0, 0.08), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.9);
     transition: var(--transition);
 }
 
 .section-card:hover {
-    border-color: rgba(255, 196, 0, 0.3);
-    box-shadow: 0 15px 40px rgba(255, 119, 0, 0.1), 
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border-color: rgba(230, 92, 0, 0.45);
+    box-shadow: 0 18px 45px rgba(230, 92, 0, 0.18), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.95);
 }
 
 .card-heading {
     font-family: 'Baloo Bhai 2', sans-serif;
-    font-size: 2.2rem;
+    font-size: 2.3rem;
     margin-bottom: 30px;
-    color: var(--text-color);
-    border-bottom: 2px solid rgba(255, 119, 0, 0.2);
+    color: var(--navy);
+    border-bottom: 3px solid var(--saffron);
     padding-bottom: 15px;
+    display: inline-block;
 }
 
 .heading-highlight {
@@ -257,14 +364,14 @@ body {
     align-items: flex-start;
     padding: 15px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 119, 0, 0.02);
     transition: var(--transition);
     border: 1px solid transparent;
 }
 
 .feature-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 196, 0, 0.15);
+    background: rgba(255, 119, 0, 0.06);
+    border-color: rgba(255, 196, 0, 0.25);
     transform: translateX(8px) scale(1.01);
 }
 
@@ -276,7 +383,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.9);
     transition: var(--transition);
 }
 
@@ -289,23 +396,23 @@ body {
 /* Specific glows for categories */
 .orange-glow {
     color: var(--saffron-bright);
-    box-shadow: 0 0 15px rgba(255, 119, 0, 0.2);
-    border: 1px solid rgba(255, 119, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 119, 0, 0.15);
+    border: 1px solid rgba(255, 119, 0, 0.25);
 }
 .gold-glow {
     color: var(--gold);
-    box-shadow: 0 0 15px rgba(255, 196, 0, 0.2);
-    border: 1px solid rgba(255, 196, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(212, 136, 6, 0.15);
+    border: 1px solid rgba(212, 136, 6, 0.25);
 }
 .green-glow {
-    color: #39ff14;
-    box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
-    border: 1px solid rgba(57, 255, 20, 0.3);
+    color: var(--green);
+    box-shadow: 0 4px 12px rgba(17, 128, 7, 0.15);
+    border: 1px solid rgba(17, 128, 7, 0.25);
 }
 .blue-glow {
-    color: #00e5ff;
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
-    border: 1px solid rgba(0, 229, 255, 0.3);
+    color: var(--navy-light);
+    box-shadow: 0 4px 12px rgba(16, 79, 124, 0.15);
+    border: 1px solid rgba(16, 79, 124, 0.25);
 }
 
 .feature-item:hover .feature-icon-wrapper {
@@ -313,10 +420,11 @@ body {
 }
 
 .feature-text h3 {
-    font-size: 1.3rem;
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.35rem;
     font-weight: 700;
     margin-bottom: 5px;
-    color: var(--text-color);
+    color: var(--navy-light);
 }
 
 .feature-text p {
@@ -337,8 +445,8 @@ body {
     max-width: 450px;
     border-radius: 30px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    border: 2px solid rgba(255, 196, 0, 0.2);
+    box-shadow: 0 20px 50px rgba(139, 92, 26, 0.12);
+    border: 2px solid rgba(255, 196, 0, 0.25);
     transform-style: preserve-3d;
     perspective: 1000px;
     transition: var(--transition);
@@ -346,7 +454,7 @@ body {
 
 .image-container-3d:hover {
     border-color: var(--saffron-bright);
-    box-shadow: 0 30px 60px rgba(255, 119, 0, 0.2);
+    box-shadow: 0 30px 60px rgba(255, 119, 0, 0.18);
 }
 
 .bharat-mata-img {
@@ -401,7 +509,7 @@ body {
     overflow: hidden;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 119, 0, 0.08);
 }
 
 .mission-card::before {
@@ -418,10 +526,28 @@ body {
     background: var(--saffron);
 }
 .white-theme::before {
-    background: var(--white);
+    background: var(--navy);
 }
 .green-theme::before {
     background: var(--green);
+}
+
+.saffron-theme {
+    background: #fff4e8 !important;
+    border: 1px solid rgba(230, 92, 0, 0.22) !important;
+    box-shadow: 0 8px 24px rgba(230, 92, 0, 0.08);
+}
+
+.white-theme {
+    background: #f1f5f9 !important;
+    border: 1px solid rgba(0, 43, 73, 0.15) !important;
+    box-shadow: 0 8px 24px rgba(0, 43, 73, 0.08);
+}
+
+.green-theme {
+    background: #eef7ee !important;
+    border: 1px solid rgba(17, 128, 7, 0.18) !important;
+    box-shadow: 0 8px 24px rgba(17, 128, 7, 0.08);
 }
 
 .mission-icon {
@@ -433,42 +559,57 @@ body {
 
 .saffron-theme .mission-icon {
     color: var(--saffron-bright);
-    text-shadow: 0 0 10px rgba(255, 119, 0, 0.4);
+    text-shadow: 0 1px 3px rgba(255, 111, 0, 0.15);
 }
 .white-theme .mission-icon {
-    color: var(--white);
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+    color: var(--navy);
+    filter: drop-shadow(0 0 8px rgba(10, 17, 40, 0.15));
 }
 .green-theme .mission-icon {
     color: var(--green);
-    filter: drop-shadow(0 0 8px rgba(19, 136, 8, 0.4));
+    filter: drop-shadow(0 0 8px rgba(17, 128, 7, 0.15));
 }
 
 .mission-card h3 {
-    font-size: 1.4rem;
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.45rem;
     margin-bottom: 15px;
     font-weight: 700;
+    color: var(--navy);
+}
+
+.saffron-theme h3 {
+    color: var(--saffron);
+}
+.white-theme h3 {
+    color: var(--navy);
+}
+.green-theme h3 {
+    color: var(--green);
 }
 
 .mission-card p {
     color: var(--text-muted);
     font-size: 0.95rem;
+    line-height: 1.6;
 }
 
 .mission-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(139, 92, 26, 0.12);
 }
 
 .saffron-theme:hover {
-    box-shadow: 0 15px 30px rgba(255, 119, 0, 0.1);
+    border-color: var(--saffron-bright) !important;
+    box-shadow: 0 15px 35px rgba(230, 92, 0, 0.22);
 }
 .white-theme:hover {
-    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.05);
+    border-color: var(--navy) !important;
+    box-shadow: 0 15px 35px rgba(0, 43, 73, 0.18);
 }
 .green-theme:hover {
-    box-shadow: 0 15px 30px rgba(19, 136, 8, 0.1);
+    border-color: var(--green) !important;
+    box-shadow: 0 15px 35px rgba(17, 128, 7, 0.2);
 }
 
 /* Quote Section */
@@ -485,18 +626,19 @@ body {
     padding: 40px;
     text-align: center;
     border-radius: 20px;
-    background: linear-gradient(135deg, rgba(255, 119, 0, 0.1), rgba(19, 136, 8, 0.1));
-    border: 1px solid rgba(255, 196, 0, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, rgba(255, 119, 0, 0.06), rgba(19, 136, 8, 0.06));
+    border: 1px solid rgba(255, 196, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(139, 92, 26, 0.06);
 }
 
 .quote-text {
     font-family: 'Baloo Bhai 2', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1.4;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--saffron);
+    line-height: 1.5;
+    text-shadow: none;
+    font-style: italic;
 }
 
 /* Date Reveal / Teaser Section */
@@ -508,16 +650,23 @@ body {
 }
 
 .reveal-box {
-    background: linear-gradient(145deg, #1f1207, #0e0702);
+    background: linear-gradient(145deg, #fffdfb, #fff4e8);
     border: 2px solid var(--saffron);
     border-radius: 24px;
     padding: 50px 30px;
     max-width: 600px;
     width: 100%;
-    box-shadow: 0 15px 40px rgba(255, 119, 0, 0.2), 
-                inset 0 0 20px rgba(255, 119, 0, 0.1);
+    box-shadow: 0 12px 40px rgba(230, 92, 0, 0.12), 
+                inset 0 0 20px rgba(230, 92, 0, 0.02);
     position: relative;
     overflow: hidden;
+    transition: var(--transition);
+}
+
+.reveal-box:hover {
+    box-shadow: 0 18px 50px rgba(230, 92, 0, 0.22), 
+                inset 0 0 20px rgba(230, 92, 0, 0.04);
+    transform: translateY(-5px);
 }
 
 .reveal-box::after {
@@ -527,7 +676,7 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255, 196, 0, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 196, 0, 0.05) 0%, transparent 70%);
     pointer-events: none;
     animation: rotateHalo 12s linear infinite;
 }
@@ -536,13 +685,40 @@ body {
     font-family: 'Baloo Bhai 2', sans-serif;
     font-size: 2.8rem;
     font-weight: 800;
-    color: var(--white);
+    color: var(--saffron-bright);
     letter-spacing: 1px;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    text-shadow: none;
     margin-bottom: 15px;
     position: relative;
     z-index: 2;
     animation: textFlash 1.5s ease-in-out infinite alternate;
+}
+
+.event-details {
+    margin: 25px auto;
+    max-width: 450px;
+    text-align: left;
+    background: rgba(230, 92, 0, 0.04);
+    border: 1px solid rgba(230, 92, 0, 0.15);
+    padding: 20px 30px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+}
+
+.event-detail-item {
+    font-size: 1.25rem;
+    color: var(--text-color);
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.event-detail-item strong {
+    color: var(--saffron);
+    margin-right: 8px;
 }
 
 .reveal-subtext {
@@ -605,7 +781,7 @@ body {
 .main-footer {
     margin-top: 80px;
     padding: 40px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
@@ -635,7 +811,7 @@ body {
 }
 
 .divider {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(0, 0, 0, 0.15);
     font-size: 1.2rem;
 }
 
@@ -651,7 +827,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(18, 10, 2, 0.45);
     backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
@@ -668,14 +844,14 @@ body {
 }
 
 .modal-content {
-    background: linear-gradient(135deg, #1f1207, #0e0702);
+    background: linear-gradient(135deg, #ffffff, #fffcf8);
     border: 2px solid var(--gold);
     border-radius: 20px;
     padding: 40px;
     text-align: center;
     max-width: 450px;
     width: 90%;
-    box-shadow: 0 10px 40px rgba(255, 196, 0, 0.3);
+    box-shadow: 0 15px 45px rgba(212, 136, 6, 0.15);
     transform: scale(0.8);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -716,14 +892,214 @@ body {
 }
 
 .close-btn:hover {
-    background: var(--white);
+    background: var(--saffron-bright);
+    color: var(--white);
     transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(255, 110, 0, 0.3);
+}
+
+/* Close Icon Button */
+.close-icon-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    line-height: 1;
+    z-index: 10;
+}
+
+.close-icon-btn:hover {
+    color: var(--saffron-bright);
+    transform: scale(1.1);
+}
+
+/* Registration Form styles */
+.registration-content {
+    max-width: 500px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    position: relative;
+}
+
+.registration-form {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(230, 92, 0, 0.2);
+    background: #fffcf8;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--saffron-bright);
+    box-shadow: 0 0 8px rgba(255, 111, 0, 0.15);
+    background: #ffffff;
+}
+
+.form-submit-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+/* Invitation Success Modal & Card */
+.invite-content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 520px;
+    width: 95%;
+    padding: 0;
+}
+
+.invite-card-animation {
+    background: #fffdf9;
+    border: 3px double var(--saffron);
+    border-radius: 24px;
+    padding: 35px 25px;
+    box-shadow: 0 20px 60px rgba(230, 92, 0, 0.35);
+    position: relative;
+    transform-origin: top center;
+    animation: unfoldInvite 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes unfoldInvite {
+    0% {
+        transform: scale(0.6) rotateX(-75deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+.invite-banner {
+    text-align: center;
+    border-bottom: 2px dashed rgba(230, 92, 0, 0.25);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.invite-logo {
+    height: 70px;
+    width: auto;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 8px rgba(255, 119, 0, 0.2));
+    animation: pulseLogo 2.5s infinite alternate;
+}
+
+@keyframes pulseLogo {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.06); }
+}
+
+.invite-banner h2 {
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.7rem;
+    color: var(--saffron-bright);
+    margin: 5px 0 0 0;
+}
+
+.invite-body {
+    text-align: left;
+}
+
+.invite-greeting {
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+}
+
+.invite-text {
+    font-size: 1.05rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.invite-details-box {
+    background: rgba(230, 92, 0, 0.05);
+    border: 1px solid rgba(230, 92, 0, 0.18);
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.invite-details-box p {
+    font-size: 1.15rem;
+    color: var(--text-color);
+    margin: 0 !important;
+}
+
+.invite-details-box strong {
+    color: var(--saffron);
+}
+
+.invite-footer {
+    text-align: center;
+    border-top: 1px dashed rgba(230, 92, 0, 0.2);
+    padding-top: 15px;
+}
+
+.invite-signature {
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.invite-salute {
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--saffron-bright);
+    margin: 0;
 }
 
 /* Animations */
 @keyframes pulseGlow {
-    0%, 100% { opacity: 0.8; text-shadow: 0 0 10px rgba(255, 119, 0, 0.5); }
-    50% { opacity: 1; text-shadow: 0 0 25px rgba(255, 119, 0, 0.9), 0 0 40px rgba(255, 196, 0, 0.6); }
+    0%, 100% { opacity: 0.8; text-shadow: 0 1px 2px rgba(255, 119, 0, 0.2); }
+    50% { opacity: 1; text-shadow: 0 1px 8px rgba(255, 119, 0, 0.4); }
 }
 
 @keyframes floatTitle {
@@ -732,8 +1108,8 @@ body {
 }
 
 @keyframes textFlash {
-    from { text-shadow: 0 0 10px rgba(255, 119, 0, 0.6), 0 0 2px rgba(255, 119, 0, 1); }
-    to { text-shadow: 0 0 25px rgba(255, 119, 0, 0.9), 0 0 8px rgba(255, 196, 0, 0.8); }
+    from { text-shadow: 0 1px 2px rgba(255, 119, 0, 0.15); }
+    to { text-shadow: 0 1px 8px rgba(255, 119, 0, 0.35); }
 }
 
 @keyframes rotateHalo {
@@ -783,30 +1159,14 @@ body {
         max-width: 380px;
     }
     
-    .main-title {
-        font-size: 4rem;
-    }
-    
-    .title-yuva {
-        font-size: 4.8rem;
-    }
-    
-    .title-sangam {
-        font-size: 3.8rem;
+    .main-logo {
+        max-width: 340px;
     }
 }
 
 @media (max-width: 600px) {
-    .main-title {
-        font-size: 3.2rem;
-    }
-    
-    .title-yuva {
-        font-size: 3.8rem;
-    }
-    
-    .title-sangam {
-        font-size: 3rem;
+    .main-logo {
+        max-width: 270px;
     }
     
     .subtitle {
@@ -860,14 +1220,14 @@ body {
     width: 100%;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 45px rgba(139, 92, 26, 0.12);
     border: 2px solid rgba(255, 196, 0, 0.25);
     transition: var(--transition);
 }
 
 .youngsters-container:hover {
     border-color: var(--saffron-bright);
-    box-shadow: 0 20px 50px rgba(255, 119, 0, 0.25);
+    box-shadow: 0 20px 50px rgba(255, 119, 0, 0.2);
 }
 
 .youngsters-img {
@@ -888,6 +1248,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(15, 10, 5, 0.8) 0%, rgba(15, 10, 5, 0) 40%);
+    background: linear-gradient(to top, rgba(43, 26, 14, 0.6) 0%, rgba(43, 26, 14, 0) 40%);
     pointer-events: none;
 }

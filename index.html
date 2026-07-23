@@ -33,29 +33,35 @@
     <!-- Main Container -->
     <div class="app-container">
 
-        <!-- Top Shloka / Mantra banner -->
-        <header class="top-banner">
-            <div class="shloka-text">|| ભારત માતા તમસ્તુમ્યં ||</div>
-        </header>
+        <!-- Navigation Bar -->
+        <nav class="main-navbar">
+            <div class="nav-container">
+                <a href="#" class="nav-brand">
+                    <img src="assets/images/logo.png" alt="Yuva Sangam Logo" class="nav-logo-img">
+                    <span class="nav-brand-text">યુવા સંગમ</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#about" class="nav-link">ધ્યેય અને વિઝન</a></li>
+                    <li><a href="#features" class="nav-link">વિશેષતાઓ</a></li>
+                    <li><a href="register.html" class="nav-register-btn">નોંધણી / Register</a></li>
+                </ul>
+            </div>
+        </nav>
 
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-content">
                 <h2 class="sub-header-town">ગોરવા નગર</h2>
-                <!-- Title Group with Paint Brush Effect -->
-                <div class="title-container">
-                    <h1 class="main-title">
-                        <span class="title-yuva">યુવા</span>
-                        <span class="title-sangam">સંગમ</span>
-                    </h1>
-                    <div class="brush-underline"></div>
+                <!-- Logo Image -->
+                <div class="logo-container">
+                    <img src="assets/images/logo.png" alt="યુવા સંગમ" class="main-logo">
                 </div>
                 <h2 class="subtitle">સાથે મળીને, રાષ્ટ્ર માટે...</h2>
             </div>
         </section>
 
         <!-- Main Content Section: Split Layout -->
-        <section class="main-content">
+        <section class="main-content" id="features">
             <div class="content-grid">
 
                 <!-- Left Column: Why Join? -->
@@ -145,7 +151,7 @@
         </section>
 
         <!-- Mission / Goal Section -->
-        <section class="mission-section reveal-on-scroll">
+        <section class="mission-section reveal-on-scroll" id="about">
             <h2 class="section-title">ધ્યેય:</h2>
             <div class="mission-grid">
 
@@ -208,17 +214,22 @@
         </section>
 
         <!-- Date Reveal Section (Interactive) -->
-        <section class="reveal-section reveal-on-scroll">
+        <section class="reveal-section reveal-on-scroll" id="register">
             <div class="reveal-box">
                 <div class="sparkle-fireworks"></div>
-                <h2 class="reveal-title">DATE REVEAL SOON</h2>
-                <p class="reveal-subtext">ભવ્ય સંમેલનની તારીખ ટૂંક સમયમાં જાહેર કરવામાં આવશે.</p>
+                <h2 class="reveal-title">સંમેલન વિગત</h2>
+                <div class="event-details">
+                    <p class="event-detail-item"><strong>દિનાંક:</strong> ૧૬ ઑગસ્ટ ૨૦૨૬, રવિવાર</p>
+                    <p class="event-detail-item"><strong>સમય:</strong> સાંજે ૪:૩૦ વાગે</p>
+                    <p class="event-detail-item"><strong>સ્થાન:</strong> </p>
+                </div>
+                <p class="reveal-subtext">સંમેલનમાં હાર્દિક આમંત્રિત છો.</p>
 
                 <div class="interactive-action">
-                    <button class="action-btn" id="notify-btn">
-                        <span class="btn-text">મને અપડેટ આપો!</span>
+                    <a href="register.html" class="action-btn" style="text-decoration: none; display: inline-block;">
+                        <span class="btn-text">નોંધણી કરો / Register Now</span>
                         <span class="btn-glow"></span>
-                    </button>
+                    </a>
                     <!-- Small interactive game / scratch card or secret indicator -->
                     <p class="teaser-hint" id="teaser-hint">ગ્લોઇંગ બટન પર ક્લિક કરો!</p>
                 </div>
@@ -247,7 +258,7 @@
         </footer>
     </div>
 
-    <!-- Notification Modal / Alert -->
+    <!-- Notification Modal / Alert (Unused but kept for base structure) -->
     <div class="notification-modal" id="modal">
         <div class="modal-content">
             <div class="modal-icon">🚩</div>
@@ -257,11 +268,74 @@
         </div>
     </div>
 
-    <!-- Background Audio (Patriotic Instrumental) -->
-    <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        <!-- Default fallback instrumentals can be loaded from standard royalty free sources, using a placeholder for now -->
-    </audio>
+    <!-- Registration Modal -->
+    <div class="notification-modal" id="reg-modal">
+        <div class="modal-content registration-content">
+            <span class="close-icon-btn" id="close-reg-modal">&times;</span>
+            <div class="modal-icon">🚩</div>
+            <h3>યુવા સંગમ નોંધણી</h3>
+            <form id="reg-form" class="registration-form">
+                <div class="form-group">
+                    <label for="reg-name">નામ (Name)</label>
+                    <input type="text" id="reg-name" required placeholder="તમારું પૂરું નામ લખો">
+                </div>
+                <div class="form-group">
+                    <label for="reg-contact">સંપર્ક સૂત્ર (Mobile Number)</label>
+                    <input type="tel" id="reg-contact" required placeholder="૧૦ આંકડાનો મોબાઇલ નંબર"
+                        pattern="[0-9]{10}">
+                </div>
+                <div class="form-group">
+                    <label for="reg-occupation">અભ્યાસ / વ્યવસાય (Education / Occupation)</label>
+                    <input type="text" id="reg-occupation" required placeholder="તમારો અભ્યાસ અથવા વ્યવસાય">
+                </div>
+                <div class="form-group">
+                    <label for="reg-dob">જન્મ તારીખ (Date of Birth)</label>
+                    <input type="date" id="reg-dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-address">સરનામું (Address)</label>
+                    <textarea id="reg-address" required placeholder="તમારું પૂરું સરનામું લખો" rows="3"></textarea>
+                </div>
+                <button type="submit" class="action-btn form-submit-btn">
+                    <span class="btn-text">સબમિટ કરો</span>
+                    <span class="btn-glow"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Invitation Success Modal -->
+    <div class="notification-modal" id="invite-modal">
+        <div class="modal-content invite-content">
+            <span class="close-icon-btn" id="close-invite-modal">&times;</span>
+            <div class="invite-card-animation">
+                <div class="invite-banner">
+                    <img src="assets/images/logo.png" alt="Yuva Sangam Logo" class="invite-logo">
+                    <h2>|| નિમંત્રણ પત્રક ||</h2>
+                </div>
+                <div class="invite-body">
+                    <p class="invite-greeting">પ્રિય યુવા મિત્ર,</p>
+                    <p class="invite-text">
+                        આપને રાષ્ટ્ર ઉત્થાન અને સંસ્કાર ઘડતરના આ ભવ્ય <strong>યુવા સંગમ સંમેલન</strong> માં જોડાવવા માટે
+                        સહાદર આમંત્રિત કરવામાં આવે છે.
+                    </p>
+                    <div class="invite-details-box">
+                        <p>📅 <strong>તારીખ:</strong> ૧૬ ઑગસ્ટ ૨૦૨૬, રવિવાર</p>
+                        <p>⏰ <strong>સમય:</strong> સાંજે ૪:૩૦ વાગે</p>
+                        <p>📍 <strong>સ્થાન:</strong> ગોરવા નગર, વડોદરા</p>
+                    </div>
+                    <div class="invite-footer">
+                        <p class="invite-signature">સૌજન્ય: ગોરવાનગર સંગઠન</p>
+                        <p class="invite-salute">🚩 જય હિન્દ! જય ભારત! 🚩</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Player Container (Hidden off-screen) -->
+    <div id="yt-player"
+        style="position: fixed; left: -9999px; top: -9999px; width: 200px; height: 200px; pointer-events: none;"></div>
 
     <script src="main.js"></script>
 </body>

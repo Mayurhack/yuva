@@ -122,24 +122,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Interactive Reveal Date & Button Event
+    // 4. Interactive Registration & Modal Events
+    const navRegBtn = document.getElementById('nav-reg-btn');
     const notifyBtn = document.getElementById('notify-btn');
-    const modal = document.getElementById('modal');
-    const closeModal = document.getElementById('close-modal');
+    const regModal = document.getElementById('reg-modal');
+    const closeRegModal = document.getElementById('close-reg-modal');
+    const regForm = document.getElementById('reg-form');
+    const inviteModal = document.getElementById('invite-modal');
+    const closeInviteModal = document.getElementById('close-invite-modal');
 
     // Confetti canvas or simple firework burst animation on click
     function createFireworks() {
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 45; i++) {
             setTimeout(() => {
                 const burstParticle = new Particle();
                 // Override to burst from the center of screen
-                burstParticle.x = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
-                burstParticle.y = window.innerHeight / 2 + (Math.random() - 0.5) * 200;
-                burstParticle.speedY = (Math.random() - 0.5) * 6;
-                burstParticle.speedX = (Math.random() - 0.5) * 6;
-                burstParticle.size = Math.random() * 5 + 2;
+                burstParticle.x = window.innerWidth / 2 + (Math.random() - 0.5) * 150;
+                burstParticle.y = window.innerHeight / 2 + (Math.random() - 0.5) * 150;
+                burstParticle.speedY = (Math.random() - 0.5) * 8;
+                burstParticle.speedX = (Math.random() - 0.5) * 8;
+                burstParticle.size = Math.random() * 6 + 2.5;
                 burstParticle.alpha = 1.0;
-                burstParticle.fadeSpeed = 0.015;
+                burstParticle.fadeSpeed = 0.012;
                 particles.push(burstParticle);
                 
                 // Remove extra particles after animation to maintain performance
@@ -147,59 +151,131 @@ document.addEventListener('DOMContentLoaded', () => {
                     const idx = particles.indexOf(burstParticle);
                     if (idx > -1) particles.splice(idx, 1);
                 }, 2000);
-            }, i * 20);
+            }, i * 15);
         }
+    }
+    window.createFireworks = createFireworks;
+
+    // Open Registration Modal
+    if (navRegBtn) {
+        navRegBtn.addEventListener('click', () => {
+            regModal.classList.add('active');
+        });
     }
 
     if (notifyBtn) {
         notifyBtn.addEventListener('click', () => {
+            regModal.classList.add('active');
+        });
+    }
+
+    // Close Registration Modal
+    if (closeRegModal) {
+        closeRegModal.addEventListener('click', () => {
+            regModal.classList.remove('active');
+        });
+    }
+
+    // Submit Registration Form
+    if (regForm) {
+        regForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Close registration modal
+            regModal.classList.remove('active');
+            
+            // Trigger spectacular saffron/gold fireworks animation
             createFireworks();
+            
+            // Show invite modal after a tiny delay
             setTimeout(() => {
-                modal.classList.add('active');
-            }, 500);
+                inviteModal.classList.add('active');
+            }, 300);
+            
+            // Reset form for future use
+            regForm.reset();
         });
     }
 
-    if (closeModal) {
-        closeModal.addEventListener('click', () => {
-            modal.classList.remove('active');
+    // Close Invite Modal
+    if (closeInviteModal) {
+        closeInviteModal.addEventListener('click', () => {
+            inviteModal.classList.remove('active');
         });
     }
 
-    // Close modal if user clicks outside content
+    // Close modals if user clicks outside content
     window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
+        if (e.target === regModal) {
+            regModal.classList.remove('active');
+        }
+        if (e.target === inviteModal) {
+            inviteModal.classList.remove('active');
         }
     });
 
-    // 5. Audio Control Logic
+    // 5. Audio Control Logic using YouTube API
     const audioToggle = document.getElementById('audio-toggle');
-    const bgMusic = document.getElementById('bg-music');
     const volOnIcon = document.querySelector('.volume-on');
     const volOffIcon = document.querySelector('.volume-off');
     
     let isPlaying = false;
+    let ytPlayerReady = false;
+    let ytPlayer;
 
-    if (audioToggle && bgMusic) {
-        // Lower the volume to make it pleasant background music
-        bgMusic.volume = 0.35;
+    function initYTPlayer() {
+        if (ytPlayerReady || ytPlayer) return;
+        ytPlayer = new YT.Player('yt-player', {
+            height: '200',
+            width: '200',
+            videoId: 'RHMM8tKsGbw',
+            playerVars: {
+                'playsinline': 1,
+                'loop': 1,
+                'playlist': 'RHMM8tKsGbw'
+            },
+            events: {
+                'onReady': () => {
+                    ytPlayerReady = true;
+                    ytPlayer.setVolume(35);
+                }
+            }
+        });
+    }
 
+    if (document.getElementById('yt-player')) {
+        if (window.YT && window.YT.Player) {
+            initYTPlayer();
+        } else {
+            // Load YouTube API script dynamically
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            window.onYouTubeIframeAPIReady = function() {
+                initYTPlayer();
+            }
+        }
+    }
+
+    if (audioToggle) {
         audioToggle.addEventListener('click', () => {
+            if (!ytPlayerReady || !ytPlayer) {
+                console.log("YouTube Player is loading, please wait...");
+                return;
+            }
+            
             if (isPlaying) {
-                bgMusic.pause();
+                ytPlayer.pauseVideo();
                 volOnIcon.classList.add('hidden');
                 volOffIcon.classList.remove('hidden');
                 isPlaying = false;
             } else {
-                // Play audio, handle browser autoplace block gracefully
-                bgMusic.play().then(() => {
-                    volOnIcon.classList.remove('hidden');
-                    volOffIcon.classList.add('hidden');
-                    isPlaying = true;
-                }).catch(err => {
-                    console.log("Audio play blocked by browser. User interaction required.", err);
-                });
+                ytPlayer.playVideo();
+                volOnIcon.classList.remove('hidden');
+                volOffIcon.classList.add('hidden');
+                isPlaying = true;
             }
         });
     }
