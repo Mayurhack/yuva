@@ -1,3 +1,19 @@
+// Initialize Firebase safely
+let db = null;
+if (window.firebase && typeof firebaseConfig !== 'undefined') {
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        db = firebase.firestore();
+        window.firebaseDB = db;
+    } catch (err) {
+        console.error("Firebase initialization error:", err);
+    }
+} else {
+    console.warn("Firebase SDK not loaded or firebaseConfig is missing. Running in simulator mode.");
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Particle Canvas Setup
     const canvas = document.getElementById('particle-canvas');
@@ -181,19 +197,49 @@ document.addEventListener('DOMContentLoaded', () => {
         regForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Close registration modal
-            regModal.classList.remove('active');
-            
-            // Trigger spectacular saffron/gold fireworks animation
-            createFireworks();
-            
-            // Show invite modal after a tiny delay
-            setTimeout(() => {
-                inviteModal.classList.add('active');
-            }, 300);
-            
-            // Reset form for future use
-            regForm.reset();
+            // Get form values
+            const name = regForm.querySelector('#reg-name') ? regForm.querySelector('#reg-name').value : '';
+            const contact = regForm.querySelector('#reg-contact') ? regForm.querySelector('#reg-contact').value : '';
+            const occupation = regForm.querySelector('#reg-occupation') ? regForm.querySelector('#reg-occupation').value : '';
+            const dob = regForm.querySelector('#reg-dob') ? regForm.querySelector('#reg-dob').value : '';
+            const address = regForm.querySelector('#reg-address') ? regForm.querySelector('#reg-address').value : '';
+
+            const handleSuccess = () => {
+                // Close registration modal
+                regModal.classList.remove('active');
+                
+                // Trigger spectacular saffron/gold fireworks animation
+                createFireworks();
+                
+                // Show invite modal after a tiny delay
+                setTimeout(() => {
+                    inviteModal.classList.add('active');
+                }, 300);
+                
+                // Reset form for future use
+                regForm.reset();
+            };
+
+            if (db) {
+                db.collection("registrations").add({
+                    name,
+                    contact,
+                    occupation,
+                    dob,
+                    address,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(() => {
+                    handleSuccess();
+                })
+                .catch((error) => {
+                    console.error("Error saving registration to Firebase:", error);
+                    alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી: " + error.message);
+                });
+            } else {
+                console.log("Firebase database not active. Saving registration locally (simulated).");
+                handleSuccess();
+            }
         });
     }
 
