@@ -1341,3 +1341,40 @@ body::after {
         font-weight: 600;
     }
 }
+
+/* Moving Flowing Rainbow Background */
+#rainbow-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2; /* Placed behind the particle canvas and layout content */
+    pointer-events: none;
+    opacity: 0.20; /* 20% opacity as requested */
+    background: linear-gradient(120deg, 
+        #ff3b30, /* Red */
+        #ff9500, /* Orange */
+        #ffcc00, /* Yellow */
+        #4cd964, /* Green */
+        #5ac8fa, /* Teal/Light Blue */
+        #007aff, /* Blue */
+        #5856d6, /* Indigo/Purple */
+        #ff2d55, /* Pink */
+        #ff3b30  /* Back to Red for seamless loop */
+    );
+    background-size: 600% 600%;
+    animation: flowRainbow 25s ease infinite;
+}
+
+@keyframes flowRainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
