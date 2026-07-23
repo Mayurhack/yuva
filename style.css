@@ -274,17 +274,13 @@ body::after {
 }
 
 .sub-header-town {
-    font-family: 'Shrikhand', 'Farsan', cursive;
-    font-size: 3.4rem;
+    font-family: 'Anek Gujarati', sans-serif;
+    font-size: 2.4rem;
     font-weight: 700;
-    color: transparent;
-    background: linear-gradient(135deg, var(--saffron-bright), var(--gold));
-    -webkit-background-clip: text;
-    background-clip: text;
+    color: var(--gold);
     letter-spacing: 2px;
-    margin-bottom: 15px;
-    display: inline-block;
-    filter: drop-shadow(0 2px 5px rgba(255, 110, 0, 0.15));
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(212, 136, 6, 0.25), 0 0 12px rgba(255, 196, 0, 0.15);
 }
 
 .subtitle {
