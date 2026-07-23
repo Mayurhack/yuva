@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 regForm.reset();
             } catch (err) {
                 console.error("Error inserting registration:", err);
-                alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી. કૃપા કરીને ફરી પ્રયાસ કરો.");
+                alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી. કૃપા કરીને ફરી પ્રયાસ કરો. \nError details: " + (err.message || err));
             }
         });
     }
