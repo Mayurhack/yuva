@@ -298,109 +298,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 5. Audio Control Logic using YouTube API
+    // 5. Audio Control Logic using HTML5 Audio Element
     const audioToggle = document.getElementById('audio-toggle');
     const volOnIcon = document.querySelector('.volume-on');
     const volOffIcon = document.querySelector('.volume-off');
     
     let isPlaying = false;
-    let ytPlayerReady = false;
-    let ytPlayer;
- 
-    function playMusic() {
-        if (!ytPlayerReady || !ytPlayer) return;
-        try {
-            ytPlayer.playVideo();
-        } catch (e) {
-            console.log("Play video attempt failed:", e);
-        }
-    }
- 
-    function pauseMusic() {
-        if (!ytPlayerReady || !ytPlayer) return;
-        try {
-            ytPlayer.pauseVideo();
-        } catch (e) {
-            console.error("Pause video attempt failed:", e);
-        }
-    }
- 
+    let audioPlayer = null;
+
     // Play audio on first user interaction if autoplay is blocked
     const autoPlayEvents = ['click', 'touchstart', 'keydown', 'mousedown'];
     function playOnInteraction() {
         if (!isPlaying) {
             playMusic();
         }
-        // Remove listeners after first interaction attempt
+    }
+
+    function initAudioPlayer() {
+        if (audioPlayer) return;
+        
+        audioPlayer = document.getElementById('ambient-audio');
+        if (!audioPlayer) return;
+        
+        audioPlayer.volume = 0.35;
+        
+        // Listen to audio play/pause events to keep state sync'd
+        audioPlayer.addEventListener('play', () => {
+            isPlaying = true;
+            if (volOnIcon) volOnIcon.classList.remove('hidden');
+            if (volOffIcon) volOffIcon.classList.add('hidden');
+            // Remove interaction listeners once playing
+            autoPlayEvents.forEach(event => {
+                window.removeEventListener(event, playOnInteraction);
+            });
+        });
+        
+        audioPlayer.addEventListener('pause', () => {
+            isPlaying = false;
+            if (volOnIcon) volOnIcon.classList.add('hidden');
+            if (volOffIcon) volOffIcon.classList.remove('hidden');
+        });
+        
+        // Try playing immediately
+        playMusic();
+        
+        // Set up event listeners for interaction fallback
         autoPlayEvents.forEach(event => {
-            window.removeEventListener(event, playOnInteraction);
+            window.addEventListener(event, playOnInteraction, { passive: true });
         });
     }
  
-    function initYTPlayer() {
-        if (ytPlayerReady || ytPlayer) return;
-        ytPlayer = new YT.Player('yt-player', {
-            height: '200',
-            width: '200',
-            videoId: 'RHMM8tKsGbw',
-            playerVars: {
-                'playsinline': 1,
-                'loop': 1,
-                'playlist': 'RHMM8tKsGbw'
-            },
-            events: {
-                'onReady': () => {
-                    ytPlayerReady = true;
-                    ytPlayer.setVolume(35);
-                    // Try to play immediately on ready
-                    playMusic();
-                    // Set up event listeners for interaction fallback
-                    autoPlayEvents.forEach(event => {
-                        window.addEventListener(event, playOnInteraction, { passive: true });
-                    });
-                },
-                'onStateChange': (event) => {
-                    if (event.data === YT.PlayerState.PLAYING) {
-                        isPlaying = true;
-                        volOnIcon.classList.remove('hidden');
-                        volOffIcon.classList.add('hidden');
-                        // Clean up interaction listeners since audio is successfully playing
-                        autoPlayEvents.forEach(ev => {
-                            window.removeEventListener(ev, playOnInteraction);
-                        });
-                    } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-                        isPlaying = false;
-                        volOnIcon.classList.add('hidden');
-                        volOffIcon.classList.remove('hidden');
-                    }
-                }
-            }
+    function playMusic() {
+        if (!audioPlayer) return;
+        audioPlayer.play().catch(err => {
+            console.log("Autoplay prevented, waiting for user interaction:", err.message);
         });
     }
-
-    if (document.getElementById('yt-player')) {
-        if (window.YT && window.YT.Player) {
-            initYTPlayer();
-        } else {
-            // Load YouTube API script dynamically
-            const tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            window.onYouTubeIframeAPIReady = function() {
-                initYTPlayer();
-            }
-        }
+ 
+    function pauseMusic() {
+        if (!audioPlayer) return;
+        audioPlayer.pause();
     }
 
     if (audioToggle) {
         audioToggle.addEventListener('click', () => {
-            if (!ytPlayerReady || !ytPlayer) {
-                console.log("YouTube Player is loading, please wait...");
-                return;
-            }
-            
+            if (!audioPlayer) return;
             if (isPlaying) {
                 pauseMusic();
             } else {
@@ -408,4 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Initialize the player
+    initAudioPlayer();
 });

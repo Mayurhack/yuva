@@ -135,8 +135,10 @@
         </div>
     </div>
 
-    <!-- YouTube Player Container (Hidden off-screen) -->
-    <div id="yt-player" style="position: fixed; left: -9999px; top: -9999px; width: 200px; height: 200px; pointer-events: none;"></div>
+    <!-- Ambient Audio Player -->
+    <audio id="ambient-audio" loop>
+        <source src="assets/bg_music.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Firebase SDK CDNs (Compatibility version) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
