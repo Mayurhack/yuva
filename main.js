@@ -323,4 +323,41 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 6. Floating Status Indicator for Database Connection
+    const debugDot = document.createElement('div');
+    debugDot.style.position = 'fixed';
+    debugDot.style.bottom = '15px';
+    debugDot.style.right = '15px';
+    debugDot.style.width = '14px';
+    debugDot.style.height = '14px';
+    debugDot.style.borderRadius = '50%';
+    debugDot.style.zIndex = '9999';
+    debugDot.style.cursor = 'pointer';
+    debugDot.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+    
+    let statusText = "";
+    if (!window.supabase) {
+        debugDot.style.backgroundColor = '#ff3b30'; // Red
+        debugDot.style.boxShadow = '0 0 10px #ff3b30';
+        statusText = "Supabase SDK CDN failed to load. Check your internet connection.";
+    } else if (typeof CONFIG === 'undefined') {
+        debugDot.style.backgroundColor = '#ff9500'; // Orange
+        debugDot.style.boxShadow = '0 0 10px #ff9500';
+        statusText = "config.js file is missing or failed to load. Check file path or reload.";
+    } else if (window.supabaseInitError) {
+        debugDot.style.backgroundColor = '#ff3b30'; // Red
+        debugDot.style.boxShadow = '0 0 10px #ff3b30';
+        statusText = "Supabase client initialization error: " + window.supabaseInitError;
+    } else {
+        debugDot.style.backgroundColor = '#34c759'; // Green
+        debugDot.style.boxShadow = '0 0 10px #34c759';
+        statusText = "Supabase Database connected successfully!";
+    }
+    
+    debugDot.title = "Database Status: " + statusText;
+    debugDot.addEventListener('click', () => {
+        alert("Database Status Details:\n\n" + statusText + "\n\n(Click anywhere to close)");
+    });
+    document.body.appendChild(debugDot);
 });
