@@ -1,3 +1,9 @@
+// Initialize Supabase Client
+const supabaseUrl = 'https://vxjfoekhmxbxwhxrmgzv.supabase.co'; // Replace with your actual Supabase URL
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4amZvZWtobXhieHdoeHJtZ3p2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzY1NzQsImV4cCI6MjEwMDM1MjU3NH0.CBTHcCnnu88WLRiGF8Us8sOd6ANa3YRjyjgDR_5VfdE'; // Replace with your actual anon key
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+window.supabaseClient = supabase;
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Particle Canvas Setup
     const canvas = document.getElementById('particle-canvas');
@@ -178,22 +184,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Submit Registration Form
     if (regForm) {
-        regForm.addEventListener('submit', (e) => {
+        regForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Close registration modal
-            regModal.classList.remove('active');
+            // Get form values
+            const name = document.querySelector('#reg-modal #reg-name').value;
+            const contact = document.querySelector('#reg-modal #reg-contact').value;
+            const occupation = document.querySelector('#reg-modal #reg-occupation').value;
+            const dob = document.querySelector('#reg-modal #reg-dob').value;
+            const address = document.querySelector('#reg-modal #reg-address').value;
             
-            // Trigger spectacular saffron/gold fireworks animation
-            createFireworks();
-            
-            // Show invite modal after a tiny delay
-            setTimeout(() => {
-                inviteModal.classList.add('active');
-            }, 300);
-            
-            // Reset form for future use
-            regForm.reset();
+            try {
+                // Insert into Supabase registrations table
+                const { error } = await supabase.from('registrations').insert([
+                    { name, contact, occupation, dob, address }
+                ]);
+                
+                if (error) throw error;
+                
+                // Close registration modal
+                regModal.classList.remove('active');
+                
+                // Trigger spectacular saffron/gold fireworks animation
+                createFireworks();
+                
+                // Show invite modal after a tiny delay
+                setTimeout(() => {
+                    inviteModal.classList.add('active');
+                }, 300);
+                
+                // Reset form for future use
+                regForm.reset();
+            } catch (err) {
+                console.error("Error inserting registration:", err);
+                alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી. કૃપા કરીને ફરી પ્રયાસ કરો.");
+            }
         });
     }
 

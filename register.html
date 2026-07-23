@@ -138,6 +138,8 @@
     <!-- YouTube Player Container (Hidden off-screen) -->
     <div id="yt-player" style="position: fixed; left: -9999px; top: -9999px; width: 200px; height: 200px; pointer-events: none;"></div>
 
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -146,28 +148,47 @@
             const inviteWrapper = document.getElementById('invite-card-wrapper');
 
             if (pageForm) {
-                pageForm.addEventListener('submit', (e) => {
+                pageForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     
-                    // Trigger global saffron/gold fireworks animation
-                    if (window.createFireworks) {
-                        window.createFireworks();
-                    }
-                    
-                    // Hide the form card with a fade transition
-                    regCard.style.opacity = '0';
-                    setTimeout(() => {
-                        regCard.classList.add('hidden');
+                    // Fetch values from inputs
+                    const name = document.getElementById('reg-name').value;
+                    const contact = document.getElementById('reg-contact').value;
+                    const occupation = document.getElementById('reg-occupation').value;
+                    const dob = document.getElementById('reg-dob').value;
+                    const address = document.getElementById('reg-address').value;
+
+                    try {
+                        // Insert into Supabase registrations table
+                        const { error } = await window.supabaseClient.from('registrations').insert([
+                            { name, contact, occupation, dob, address }
+                        ]);
+
+                        if (error) throw error;
+
+                        // Trigger global saffron/gold fireworks animation
+                        if (window.createFireworks) {
+                            window.createFireworks();
+                        }
                         
-                        // Show the invitation wrapper
-                        inviteWrapper.classList.remove('hidden');
+                        // Hide the form card with a fade transition
+                        regCard.style.opacity = '0';
                         setTimeout(() => {
-                            inviteWrapper.style.opacity = '1';
-                        }, 50);
-                        
-                        // Scroll to top of window to see the invite card clearly
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }, 400);
+                            regCard.classList.add('hidden');
+                            
+                            // Show the invitation wrapper
+                            inviteWrapper.classList.remove('hidden');
+                            setTimeout(() => {
+                                inviteWrapper.style.opacity = '1';
+                            }, 50);
+                            
+                            // Scroll to top of window to see the invite card clearly
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 400);
+                    } catch (err) {
+                        console.error("Error inserting registration:", err);
+                        alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી. કૃપા કરીને ફરી પ્રયાસ કરો.");
+                    }
                 });
             }
         });
