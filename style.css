@@ -1252,3 +1252,68 @@ body::after {
     background: linear-gradient(to top, rgba(43, 26, 14, 0.6) 0%, rgba(43, 26, 14, 0) 40%);
     pointer-events: none;
 }
+
+/* Countdown Timer Styles */
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px auto;
+    max-width: 500px;
+    width: 100%;
+}
+
+.countdown-item {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(230, 92, 0, 0.18);
+    border-radius: 16px;
+    padding: 12px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 15px rgba(230, 92, 0, 0.05);
+    transition: var(--transition);
+}
+
+.countdown-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--saffron-bright);
+    box-shadow: 0 8px 20px rgba(230, 92, 0, 0.15);
+    background: #ffffff;
+}
+
+.countdown-value {
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--saffron-bright);
+    line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(255, 111, 0, 0.15);
+}
+
+.countdown-label {
+    font-family: 'Anek Gujarati', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .countdown-container {
+        gap: 8px;
+    }
+    .countdown-item {
+        padding: 8px 4px;
+        border-radius: 12px;
+    }
+    .countdown-value {
+        font-size: 1.6rem;
+    }
+    .countdown-label {
+        font-size: 0.7rem;
+    }
+}
