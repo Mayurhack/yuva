@@ -1,8 +1,13 @@
-// Initialize Supabase Client
-const supabaseUrl = 'https://vxjfoekhmxbxwhxrmgzv.supabase.co'; // Replace with your actual Supabase URL
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4amZvZWtobXhieHdoeHJtZ3p2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzY1NzQsImV4cCI6MjEwMDM1MjU3NH0.CBTHcCnnu88WLRiGF8Us8sOd6ANa3YRjyjgDR_5VfdE'; // Replace with your actual anon key
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-window.supabaseClient = supabase;
+// Initialize Supabase Client safely
+let supabase = null;
+if (window.supabase) {
+    const supabaseUrl = 'https://vxjfoekhmxbxwhxrmgzv.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4amZvZWtobXhieHdoeHJtZ3p2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzY1NzQsImV4cCI6MjEwMDM1MjU3NH0.CBTHcCnnu88WLRiGF8Us8sOd6ANa3YRjyjgDR_5VfdE';
+    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    window.supabaseClient = supabase;
+} else {
+    console.error("Supabase CDN failed to load. Check your internet connection.");
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Particle Canvas Setup
@@ -195,6 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const address = document.querySelector('#reg-modal #reg-address').value;
             
             try {
+                if (!supabase) {
+                    throw new Error("Supabase is not initialized. Please check your internet connection.");
+                }
                 // Insert into Supabase registrations table
                 const { error } = await supabase.from('registrations').insert([
                     { name, contact, occupation, dob, address }

@@ -159,6 +159,9 @@
                     const address = document.getElementById('reg-address').value;
 
                     try {
+                        if (!window.supabaseClient) {
+                            throw new Error("Supabase is not initialized. Please check your internet connection.");
+                        }
                         // Insert into Supabase registrations table
                         const { error } = await window.supabaseClient.from('registrations').insert([
                             { name, contact, occupation, dob, address }
