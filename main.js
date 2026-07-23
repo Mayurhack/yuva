@@ -1,14 +1,19 @@
 // Initialize Supabase Client safely
 let supabase = null;
-if (window.supabase && typeof CONFIG !== 'undefined') {
-    supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
-    window.supabaseClient = supabase;
-} else {
-    if (!window.supabase) {
-        console.error("Supabase CDN failed to load. Check your internet connection.");
+try {
+    if (window.supabase && typeof CONFIG !== 'undefined') {
+        supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+        window.supabaseClient = supabase;
     } else {
-        console.warn("CONFIG is missing. Please make sure config.js is loaded.");
+        if (!window.supabase) {
+            console.error("Supabase CDN failed to load. Check your internet connection.");
+        } else {
+            console.warn("CONFIG is missing. Please make sure config.js is loaded.");
+        }
     }
+} catch (e) {
+    console.error("Error creating Supabase client:", e);
+    window.supabaseInitError = e.message;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -206,7 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     let missing = [];
                     if (!window.supabase) missing.push("Supabase library SDK (CDN) did not load");
                     if (typeof CONFIG === 'undefined') missing.push("config.js file did not load");
-                    throw new Error("Initialization failed: " + missing.join(" and "));
+                    if (window.supabaseInitError) missing.push("Init Error: " + window.supabaseInitError);
+                    throw new Error("Initialization failed: " + (missing.join(" and ") || "Unknown reason"));
                 }
                 // Insert into Supabase registrations table
                 const { error } = await supabase.from('registrations').insert([
