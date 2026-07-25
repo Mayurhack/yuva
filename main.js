@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const contact = regForm.querySelector('#reg-contact') ? regForm.querySelector('#reg-contact').value : '';
             const email = regForm.querySelector('#reg-email') ? regForm.querySelector('#reg-email').value : '';
             const gender = regForm.querySelector('#reg-gender') ? regForm.querySelector('#reg-gender').value : '';
+            const subject = regForm.querySelector('#reg-subject') ? regForm.querySelector('#reg-subject').value : '';
             const occupation = regForm.querySelector('#reg-occupation') ? regForm.querySelector('#reg-occupation').value : '';
             const dob = regForm.querySelector('#reg-dob') ? regForm.querySelector('#reg-dob').value : '';
             const address = regForm.querySelector('#reg-address') ? regForm.querySelector('#reg-address').value : '';
@@ -259,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         contact,
                         email,
                         gender,
+                        subject,
                         occupation,
                         dob,
                         address,

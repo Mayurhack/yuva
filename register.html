@@ -101,6 +101,17 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="reg-subject">વિષય (Subject)</label>
+                        <select id="reg-subject" required>
+                            <option value="" disabled selected>વિષય પસંદ કરો (Select Subject)</option>
+                            <option value="૧.સેવા">૧. સેવા (Seva)</option>
+                            <option value="૨.સંઘકાર્ય">૨. સંઘકાર્ય (Sanghkarya)</option>
+                            <option value="૪.સ્વદેશી">૪. સ્વદેશી (Swadeshi)</option>
+                            <option value="૫.પર્યાવરણ">૫. પર્યાવરણ (Paryavaran)</option>
+                            <option value="૬.પ્રચાર (સોશિયલ મિડિયા)">૬. પ્રચાર (સોશિયલ મિડિયા) (Social Media)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="reg-occupation">અભ્યાસ / વ્યવસાય (Education / Occupation)</label>
                         <input type="text" id="reg-occupation" required placeholder="તમારો અભ્યાસ અથવા વ્યવસાય">
                     </div>
@@ -177,6 +188,7 @@
                     const contact = document.getElementById('reg-contact') ? document.getElementById('reg-contact').value : '';
                     const email = document.getElementById('reg-email') ? document.getElementById('reg-email').value : '';
                     const gender = document.getElementById('reg-gender') ? document.getElementById('reg-gender').value : '';
+                    const subject = document.getElementById('reg-subject') ? document.getElementById('reg-subject').value : '';
                     const occupation = document.getElementById('reg-occupation') ? document.getElementById('reg-occupation').value : '';
                     const dob = document.getElementById('reg-dob') ? document.getElementById('reg-dob').value : '';
                     const address = document.getElementById('reg-address') ? document.getElementById('reg-address').value : '';
@@ -210,6 +222,7 @@
                                 contact,
                                 email,
                                 gender,
+                                subject,
                                 occupation,
                                 dob,
                                 address,
