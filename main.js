@@ -315,10 +315,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Play/unmute audio on first user interaction if autoplay is blocked
     const autoPlayEvents = ['click', 'touchstart', 'keydown', 'mousedown'];
     function playOnInteraction() {
-        if (audioPlayer) {
+        if (audioPlayer && (!isPlaying || audioPlayer.muted)) {
             audioPlayer.muted = false;
             audioPlayer.play().then(() => {
                 isPlaying = true;
+                if (volOnIcon) volOnIcon.classList.remove('hidden');
+                if (volOffIcon) volOffIcon.classList.add('hidden');
             }).catch(err => {
                 console.log("Interaction play failed:", err.message);
             });
@@ -340,14 +342,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Listen to audio play/pause events to keep state sync'd
         audioPlayer.addEventListener('play', () => {
             isPlaying = true;
-            if (volOnIcon) volOnIcon.classList.remove('hidden');
-            if (volOffIcon) volOffIcon.classList.add('hidden');
-            
-            // If the audio starts playing unmuted, clean up the interaction listeners
             if (!audioPlayer.muted) {
+                if (volOnIcon) volOnIcon.classList.remove('hidden');
+                if (volOffIcon) volOffIcon.classList.add('hidden');
+                
+                // If it starts playing unmuted, clean up the interaction listeners
                 autoPlayEvents.forEach(event => {
                     window.removeEventListener(event, playOnInteraction);
                 });
+            } else {
+                if (volOnIcon) volOnIcon.classList.add('hidden');
+                if (volOffIcon) volOffIcon.classList.remove('hidden');
             }
         });
         
@@ -369,21 +374,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function playMusic() {
         if (!audioPlayer) return;
         
+        audioPlayer.muted = false;
         const playPromise = audioPlayer.play();
         if (playPromise !== undefined) {
             playPromise.then(() => {
                 isPlaying = true;
+                if (volOnIcon) volOnIcon.classList.remove('hidden');
+                if (volOffIcon) volOffIcon.classList.add('hidden');
             }).catch(err => {
-                console.log("Autoplay unmuted blocked. Trying muted autoplay...", err.message);
-                
-                // Fallback: Mute the audio and play (allowed by all browsers on load)
-                audioPlayer.muted = true;
-                audioPlayer.play().then(() => {
-                    isPlaying = true;
-                    console.log("Muted autoplay started successfully.");
-                }).catch(mutedErr => {
-                    console.warn("Muted autoplay also blocked:", mutedErr.message);
-                });
+                console.log("Autoplay unmuted blocked. Keeping paused until user interaction...", err.message);
+                isPlaying = false;
+                if (volOnIcon) volOnIcon.classList.add('hidden');
+                if (volOffIcon) volOffIcon.classList.remove('hidden');
             });
         }
     }
@@ -394,14 +396,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (audioToggle) {
-        audioToggle.addEventListener('click', () => {
+        audioToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent window click listener from immediately running
             if (!audioPlayer) return;
-            if (isPlaying) {
+            if (isPlaying && !audioPlayer.muted) {
                 pauseMusic();
             } else {
-                if (audioPlayer.muted) {
-                    audioPlayer.muted = false;
-                }
+                audioPlayer.muted = false;
                 playMusic();
             }
         });
