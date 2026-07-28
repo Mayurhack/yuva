@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -60,12 +60,24 @@
             <div class="nav-container">
                 <a href="index.html" class="nav-brand">
                     <img src="assets/images/logo.png" alt="Yuva Sangam Logo" class="nav-logo-img">
-                    <span class="nav-brand-text">યુવા સંગમ</span>
+                    <span class="nav-brand-text" data-i18n="nav-brand">Yuva Sangam</span>
                 </a>
                 <ul class="nav-links">
-                    <li><a href="index.html" class="nav-link">મુખ્ય પૃષ્ઠ</a></li>
-                    <li><a href="index.html#about" class="nav-link">ધ્યેય અને વિઝન</a></li>
-                    <li><a href="index.html#features" class="nav-link">વિશેષતાઓ</a></li>
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link" data-i18n="nav-about">Mission & Vision</a></li>
+                    <li><a href="index.html#features" class="nav-link" data-i18n="nav-features">Features</a></li>
+                    <li>
+                        <div class="lang-selector-container">
+                            <svg class="lang-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+                            </svg>
+                            <select id="lang-select" class="lang-select">
+                                <option value="en">English</option>
+                                <option value="gu">ગુજરાતી</option>
+                                <option value="hi">हिन्दी</option>
+                            </select>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -75,56 +87,56 @@
             <!-- Form Section -->
             <div class="section-card register-page-card" id="reg-card-content">
                 <div class="modal-icon" style="text-align: center;">🚩</div>
-                <h2 class="card-heading" style="text-align: center; display: block; margin-bottom: 25px;">
-                    યુવા સંગમ નોંધણી પત્રક
+                <h2 class="card-heading" style="text-align: center; display: block; margin-bottom: 25px;" data-i18n="reg-form-title">
+                    Yuva Sangam Registration Form
                 </h2>
                 <form id="page-reg-form" class="registration-form">
                     <div class="form-group">
-                        <label for="reg-name">નામ (Name)</label>
-                        <input type="text" id="reg-name" required placeholder="તમારું પૂરું નામ લખો">
+                        <label for="reg-name" data-i18n="reg-label-name">Name</label>
+                        <input type="text" id="reg-name" required placeholder="Enter your full name" data-i18n-placeholder="reg-placeholder-name">
                     </div>
                     <div class="form-group">
-                        <label for="reg-contact">સંપર્ક સૂત્ર (Mobile Number)</label>
-                        <input type="tel" id="reg-contact" required placeholder="૧૦ આંકડાનો મોબાઇલ નંબર" pattern="[0-9]{10}">
+                        <label for="reg-contact" data-i18n="reg-label-contact">Mobile Number</label>
+                        <input type="tel" id="reg-contact" required placeholder="10-digit mobile number" data-i18n-placeholder="reg-placeholder-contact" pattern="[0-9]{10}">
                     </div>
                     <div class="form-group">
-                        <label for="reg-email">ઇમેઇલ (Email)</label>
-                        <input type="email" id="reg-email" required placeholder="તમારું ઇમેઇલ સરનામું લખો">
+                        <label for="reg-email" data-i18n="reg-label-email">Email</label>
+                        <input type="email" id="reg-email" required placeholder="Enter your email address" data-i18n-placeholder="reg-placeholder-email">
                     </div>
                     <div class="form-group">
-                        <label for="reg-gender">લિંગ (Gender)</label>
+                        <label for="reg-gender" data-i18n="reg-label-gender">Gender</label>
                         <select id="reg-gender" required>
-                            <option value="" disabled selected>લિંગ પસંદ કરો (Select Gender)</option>
-                            <option value="Male">પુરુષ (Male)</option>
-                            <option value="Female">સ્ત્રી (Female)</option>
-                            <option value="Other">અન્ય (Other)</option>
+                            <option value="" disabled selected data-i18n="reg-option-gender-default">Select Gender</option>
+                            <option value="Male" data-i18n="reg-option-gender-male">Male</option>
+                            <option value="Female" data-i18n="reg-option-gender-female">Female</option>
+                            <option value="Other" data-i18n="reg-option-gender-other">Other</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="reg-subject">વિષય (Subject)</label>
+                        <label for="reg-subject" data-i18n="reg-label-subject">Subject</label>
                         <select id="reg-subject" required>
-                            <option value="" disabled selected>વિષય પસંદ કરો (Select Subject)</option>
-                            <option value="૧.સેવા">૧. સેવા (Seva)</option>
-                            <option value="૨.સંઘકાર્ય">૨. સંઘકાર્ય (Sanghkarya)</option>
-                            <option value="૪.સ્વદેશી">૪. સ્વદેશી (Swadeshi)</option>
-                            <option value="૫.પર્યાવરણ">૫. પર્યાવરણ (Paryavaran)</option>
-                            <option value="૬.પ્રચાર (સોશિયલ મિડિયા)">૬. પ્રચાર (સોશિયલ મિડિયા) (Social Media)</option>
+                            <option value="" disabled selected data-i18n="reg-option-subject-default">Select Subject</option>
+                            <option value="૧.સેવા">1. Service (Seva)</option>
+                            <option value="૨.સંઘકાર્ય">2. Association Work (Sanghkarya)</option>
+                            <option value="૪.સ્વદેશી">3. Swadeshi</option>
+                            <option value="૫.પર્યાવરણ">4. Environment (Paryavaran)</option>
+                            <option value="૬.પ્રચાર (સોશિયલ મિડિયા)">5. Publicity (Social Media)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="reg-occupation">અભ્યાસ / વ્યવસાય (Education / Occupation)</label>
-                        <input type="text" id="reg-occupation" required placeholder="તમારો અભ્યાસ અથવા વ્યવસાય">
+                        <label for="reg-occupation" data-i18n="reg-label-occupation">Education / Occupation</label>
+                        <input type="text" id="reg-occupation" required placeholder="Your education or occupation" data-i18n-placeholder="reg-placeholder-occupation">
                     </div>
                     <div class="form-group">
-                        <label for="reg-dob">જન્મ તારીખ (Date of Birth)</label>
+                        <label for="reg-dob" data-i18n="reg-label-dob">Date of Birth</label>
                         <input type="date" id="reg-dob" required>
                     </div>
                     <div class="form-group">
-                        <label for="reg-address">સરનામું (Address)</label>
-                        <textarea id="reg-address" required placeholder="તમારું પૂરું સરનામું લખો" rows="3"></textarea>
+                        <label for="reg-address" data-i18n="reg-label-address">Address</label>
+                        <textarea id="reg-address" required placeholder="Enter your full address" data-i18n-placeholder="reg-placeholder-address" rows="3"></textarea>
                     </div>
                     <button type="submit" class="action-btn form-submit-btn">
-                        <span class="btn-text">સબમિટ કરો</span>
+                        <span class="btn-text" data-i18n="reg-submit-btn">Submit</span>
                         <span class="btn-glow"></span>
                     </button>
                 </form>
@@ -135,27 +147,27 @@
                 <div class="invite-card-animation">
                     <div class="invite-banner">
                         <img src="assets/images/logo.png" alt="Yuva Sangam Logo" class="invite-logo">
-                        <h2>|| નિમંત્રણ પત્રક ||</h2>
+                        <h2 data-i18n="invite-title">|| Invitation Card ||</h2>
                     </div>
                     <div class="invite-body">
-                        <p class="invite-greeting">પ્રિય યુવા મિત્ર,</p>
-                        <p class="invite-text">
-                            આપને રાષ્ટ્ર ઉત્થાન અને સંસ્કાર ઘડતરના આ ભવ્ય <strong>યુવા સંગમ સંમેલન</strong> માં જોડાવવા માટે સહાદર આમંત્રિત કરવામાં આવે છે.
+                        <p class="invite-greeting" data-i18n="invite-greeting">Dear Young Friend,</p>
+                        <p class="invite-text" data-i18n="invite-text">
+                            You are cordially invited to join this grand <strong>Yuva Sangam Convention</strong> for national upliftment and character building.
                         </p>
                         <div class="invite-details-box">
-                            <p>📅 <strong>તારીખ:</strong> ૧૬ ઑગસ્ટ ૨૦૨૬, રવિવાર</p>
-                            <p>⏰ <strong>સમય:</strong> સાંજે ૪:૩૦ વાગે</p>
-                            <p>📍 <strong>સ્થાન:</strong> ગોરવા નગર, વડોદરા</p>
+                            <p data-i18n="invite-detail-date">📅 <strong>Date:</strong> 16 August 2026, Sunday</p>
+                            <p data-i18n="invite-detail-time">⏰ <strong>Time:</strong> 4:30 PM</p>
+                            <p data-i18n="invite-detail-venue">📍 <strong>Venue:</strong> Gorwa Nagar, Vadodara</p>
                         </div>
                         <div class="invite-footer">
-                            <p class="invite-signature">સૌજન્ય: ગોરવા નગર સંગઠન</p>
-                            <p class="invite-salute">🚩 જય હિન્દ! જય ભારત! 🚩</p>
+                            <p class="invite-signature" data-i18n="invite-signature">Courtesy: Gorwa Nagar Organisation</p>
+                            <p class="invite-salute" data-i18n="invite-salute">🚩 Jai Hind! Jai Bharat! 🚩</p>
                         </div>
                     </div>
                 </div>
                 <div style="text-align: center; margin-top: 25px;">
                     <a href="index.html" class="action-btn" style="text-decoration: none; display: inline-block;">
-                        <span class="btn-text">મુખ્ય પૃષ્ઠ પર પાછા જાઓ</span>
+                        <span class="btn-text" data-i18n="invite-back-btn">Back to Home Page</span>
                         <span class="btn-glow"></span>
                     </a>
                 </div>
@@ -173,6 +185,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <!-- Firebase Configuration -->
     <script src="firebase-config.js"></script>
+    <script src="translations.js"></script>
     <script src="main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -233,7 +246,13 @@
                             })
                             .catch((error) => {
                                 console.error("Error saving registration to Firebase:", error);
-                                alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી: " + error.message);
+                                const errorMsg = {
+                                    en: "Error submitting registration: ",
+                                    gu: "નોંધણી સબમિટ કરવામાં ભૂલ આવી: ",
+                                    hi: "पंजीकरण जमा करने में त्रुटि: "
+                                };
+                                const currentLang = localStorage.getItem('lang') || 'en';
+                                alert((errorMsg[currentLang] || errorMsg['en']) + error.message);
                             });
                         } else {
                             console.log("Firebase database not active. Saving registration locally (simulated).");
@@ -254,3 +273,4 @@
 </body>
 
 </html>
+

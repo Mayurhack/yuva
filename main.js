@@ -271,7 +271,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .catch((error) => {
                         console.error("Error saving registration to Firebase:", error);
-                        alert("નોંધણી સબમિટ કરવામાં ભૂલ આવી: " + error.message);
+                        const errorMsg = {
+                            en: "Error submitting registration: ",
+                            gu: "નોંધણી સબમિટ કરવામાં ભૂલ આવી: ",
+                            hi: "पंजीकरण जमा करने में त्रुटि: "
+                        };
+                        const currentLang = localStorage.getItem('lang') || 'en';
+                        alert((errorMsg[currentLang] || errorMsg['en']) + error.message);
                     });
                 } else {
                     console.log("Firebase database not active. Saving registration locally (simulated).");
