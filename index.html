@@ -426,54 +426,7 @@
         <source src="assets/bg_music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Admin Login Modal -->
-    <div class="notification-modal" id="admin-login-modal">
-        <div class="modal-content" style="max-width: 400px; text-align: left; position: relative;">
-            <span class="close-icon-btn" id="close-admin-login">&times;</span>
-            <div style="text-align: center; margin-bottom: 20px;">
-                <span style="font-size: 2.5rem;">🔑</span>
-                <h3 style="margin-top: 10px; color: var(--saffron-bright);">Admin Login</h3>
-            </div>
-            <form id="admin-login-form">
-                <div class="form-group">
-                    <label for="admin-username">Username</label>
-                    <input type="email" id="admin-username" required placeholder="admin@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="admin-password">Password</label>
-                    <input type="password" id="admin-password" required placeholder="••••••••">
-                </div>
-                <div id="admin-login-error" style="color: red; font-size: 0.9rem; margin-bottom: 10px; display: none;">
-                    Invalid username or password.
-                </div>
-                <button type="submit" class="action-btn form-submit-btn">
-                    <span class="btn-text">Login</span>
-                    <span class="btn-glow"></span>
-                </button>
-            </form>
-        </div>
-    </div>
 
-    <!-- Admin Dashboard Modal -->
-    <div class="notification-modal" id="admin-dashboard-modal">
-        <div class="modal-content" style="max-width: 1000px; width: 95%; max-height: 85vh; overflow-y: auto; text-align: left; padding: 30px; position: relative; border-color: var(--saffron-bright);">
-            <span class="close-icon-btn" id="close-admin-dashboard">&times;</span>
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--saffron-bright); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                <h2 style="font-family: 'Baloo Bhai 2', sans-serif; color: var(--navy); margin: 0; font-size: 1.8rem; display: flex; align-items: center; gap: 10px;">
-                    🚩 Registered Users 
-                    <span id="admin-role-badge" style="font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; background: var(--saffron); color: var(--white); font-weight: 700; letter-spacing: 0.5px;"></span>
-                </h2>
-                <button id="admin-refresh-btn" class="action-btn" style="padding: 6px 15px; font-size: 0.9rem; margin: 0; border-radius: 8px;">Refresh</button>
-            </div>
-            
-            <!-- Mobile list & Desktop Table Container -->
-            <div id="admin-data-container" style="overflow-x: auto;">
-                <div id="admin-loading" style="text-align: center; padding: 30px; font-size: 1.2rem; color: var(--text-muted);">
-                    Loading registrations...
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Firebase SDK CDNs (Compatibility version) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>

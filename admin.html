@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuva Sangam - Admin Portal</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@300;400;600;700;800&family=Baloo+Bhai+2:wght@600;700;800&family=Farsan&family=Shrikhand&family=Poppins:wght@300;400;600;700&family=Yatra+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Admin portal specific styles */
+        .admin-page-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 160px);
+            padding: 40px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .admin-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(230, 92, 0, 0.25);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 12px 35px rgba(230, 92, 0, 0.08);
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .admin-card:hover {
+            border-color: rgba(230, 92, 0, 0.45);
+            box-shadow: 0 18px 45px rgba(230, 92, 0, 0.18);
+        }
+
+        .admin-dashboard-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(230, 92, 0, 0.25);
+            border-radius: 24px;
+            padding: 35px;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: 0 12px 35px rgba(230, 92, 0, 0.08);
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--saffron-bright);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 280px;
+            padding: 12px 20px;
+            border: 1px solid rgba(230, 92, 0, 0.25);
+            border-radius: 50px;
+            font-size: 0.95rem;
+            outline: none;
+            background: #fffcf8;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--saffron-bright);
+            box-shadow: 0 0 10px rgba(255, 111, 0, 0.2);
+        }
+
+        .stats-badge {
+            background: rgba(0, 43, 73, 0.05);
+            border: 1px solid rgba(0, 43, 73, 0.15);
+            color: var(--navy);
+            font-family: 'Baloo Bhai 2', sans-serif;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        .admin-logout-btn {
+            background: linear-gradient(135deg, #444 0%, #222 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .admin-logout-btn:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+    </style>
+</head>
+<body>
+    <!-- Rainbow Background Overlay -->
+    <div id="rainbow-bg"></div>
+
+    <!-- Canvas for Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Top Organization Banner -->
+    <div class="top-org-bar">
+        <span class="devgiri-font">राष्ट्रीय स्वयंसेवक संघ</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Navigation Bar -->
+        <nav class="main-navbar">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">
+                    <img src="assets/images/logo.png" alt="Yuva Sangam Logo" class="nav-logo-img">
+                    <span class="nav-brand-text">Yuva Sangam</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Back to Home</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="admin-page-container">
+            <!-- 1. Login Card -->
+            <div class="admin-card" id="login-section">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <span style="font-size: 2.5rem;">🔑</span>
+                    <h3 style="margin-top: 10px; color: var(--saffron-bright); font-family: 'Baloo Bhai 2', sans-serif; font-size: 1.8rem;">Admin Portal</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 5px;">Enter credentials to view registered participants</p>
+                </div>
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="admin-username">Username / Email</label>
+                        <input type="email" id="admin-username" required placeholder="admin@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-password">Password</label>
+                        <input type="password" id="admin-password" required placeholder="••••••••">
+                    </div>
+                    <div id="admin-login-error" style="color: #e12525; font-size: 0.9rem; margin-bottom: 15px; display: none; font-weight: 600;">
+                        Invalid username or password.
+                    </div>
+                    <button type="submit" class="nav-register-btn" style="width: 100%; border: none; cursor: pointer; padding: 12px 0; font-size: 1.1rem;">
+                        Login Securely
+                    </button>
+                </form>
+            </div>
+
+            <!-- 2. Dashboard Card -->
+            <div class="admin-dashboard-card" id="dashboard-section" style="display: none;">
+                <div class="dashboard-header">
+                    <h2 style="font-family: 'Baloo Bhai 2', sans-serif; color: var(--navy); margin: 0; font-size: 1.8rem; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        🚩 Registered Users 
+                        <span id="admin-role-badge" style="font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; color: var(--white); font-weight: 700; letter-spacing: 0.5px;"></span>
+                    </h2>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button id="admin-refresh-btn" class="nav-register-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer;">Refresh</button>
+                        <button id="admin-logout-btn" class="nav-register-btn admin-logout-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer;">Logout</button>
+                    </div>
+                </div>
+
+                <!-- Search box and total counter -->
+                <div class="search-box-container">
+                    <input type="text" id="search-input" class="search-input" placeholder="🔍 Search by name, mobile, address, gender...">
+                    <span id="total-registrations" class="stats-badge">Total: 0</span>
+                </div>
+                
+                <!-- Desktop Table & Mobile Cards Container -->
+                <div id="admin-data-container" style="overflow-x: auto;">
+                    <div id="admin-loading" style="text-align: center; padding: 30px; font-size: 1.2rem; color: var(--text-muted);">
+                        Loading registrations...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK CDNs (Compatibility version) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // 1. Initialize Particles Background
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const maxParticles = 40;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 50;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = -(Math.random() * 1.2 + 0.4);
+                this.speedX = Math.sin(Math.random() * 2 * Math.PI) * 0.3;
+                const colors = ['rgba(255, 119, 0, ', 'rgba(255, 196, 0, ', 'rgba(255, 153, 51, '];
+                this.baseColor = colors[Math.floor(Math.random() * colors.length)];
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.fadeSpeed = Math.random() * 0.004 + 0.001;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.alpha -= this.fadeSpeed;
+                if (this.alpha <= 0 || this.y < -10 || this.x < 0 || this.x > canvas.width) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.baseColor + this.alpha + ')';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < maxParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // 2. Firebase Initialization Logic
+        let db = null;
+        let auth = null;
+        let registrationsData = [];
+        let currentAdminRole = sessionStorage.getItem('adminRole') || null;
+        let inlineEditingDocId = null;
+
+        const firebaseDBPromise = new Promise((resolve) => {
+            if (window.firebase && typeof firebaseConfig !== 'undefined') {
+                try {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(firebaseConfig);
+                    }
+                    db = firebase.firestore();
+                    auth = firebase.auth();
+                    resolve(db);
+                } catch (err) {
+                    console.error("Firebase init failed:", err);
+                    resolve(null);
+                }
+            } else if (window.firebase) {
+                fetch('/api/config')
+                    .then(res => res.json())
+                    .then(config => {
+                        if (config && config.apiKey && config.apiKey !== "YOUR_API_KEY") {
+                            if (!firebase.apps.length) {
+                                firebase.initializeApp(config);
+                            }
+                            db = firebase.firestore();
+                            auth = firebase.auth();
+                            resolve(db);
+                        } else {
+                            resolve(null);
+                        }
+                    })
+                    .catch(err => {
+                        console.warn("API config fallback failed. Using simulated database:", err);
+                        resolve(null);
+                    });
+            } else {
+                resolve(null);
+            }
+        });
+
+        // 3. Page Lifecycle / Session Check
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginSection = document.getElementById('login-section');
+            const dashboardSection = document.getElementById('dashboard-section');
+            const loginForm = document.getElementById('admin-login-form');
+            const loginError = document.getElementById('admin-login-error');
+            const logoutBtn = document.getElementById('admin-logout-btn');
+            const refreshBtn = document.getElementById('admin-refresh-btn');
+            const searchInput = document.getElementById('search-input');
+
+            if (currentAdminRole) {
+                // Already authenticated in this session
+                showDashboard();
+            }
+
+            // Login Handler
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('admin-username').value.trim();
+                const password = document.getElementById('admin-password').value.trim();
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+                loginError.style.display = 'none';
+
+                let matchedRole = null;
+                if (email === 'mayur@admin.com' && password === 'harharmahadev') {
+                    matchedRole = 'view';
+                } else if (email === 'mayuredit@admin.com' && password === 'edit.com') {
+                    matchedRole = 'edit';
+                }
+
+                if (!matchedRole) {
+                    loginError.innerText = "Invalid username or password.";
+                    loginError.style.display = 'block';
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Authenticating...";
+
+                firebaseDBPromise.then((activeDB) => {
+                    if (activeDB && auth) {
+                        auth.signInWithEmailAndPassword(email, password)
+                            .then(() => {
+                                currentAdminRole = matchedRole;
+                                sessionStorage.setItem('adminRole', matchedRole);
+                                showDashboard();
+                            })
+                            .catch((err) => {
+                                console.warn("Firebase auth sign-in error, using local fallback credentials:", err);
+                                // Fallback for simulated or local-only databases
+                                currentAdminRole = matchedRole;
+                                sessionStorage.setItem('adminRole', matchedRole);
+                                showDashboard(true);
+                            })
+                            .finally(() => {
+                                submitBtn.disabled = false;
+                                submitBtn.innerText = "Login Securely";
+                            });
+                    } else {
+                        // Offline or Simulated Mode fallback
+                        currentAdminRole = matchedRole;
+                        sessionStorage.setItem('adminRole', matchedRole);
+                        showDashboard(true);
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = "Login Securely";
+                    }
+                });
+            });
+
+            // Logout Handler
+            logoutBtn.addEventListener('click', () => {
+                if (auth) {
+                    auth.signOut().catch(console.error);
+                }
+                sessionStorage.clear();
+                currentAdminRole = null;
+                loginForm.reset();
+                dashboardSection.style.display = 'none';
+                loginSection.style.display = 'block';
+            });
+
+            // Refresh Handler
+            refreshBtn.addEventListener('click', loadRegistrations);
+
+            // Filter/Search Handler
+            searchInput.addEventListener('input', () => {
+                renderRegistrations(searchInput.value.trim().toLowerCase());
+            });
+        });
+
+        // 4. Dashboard View Controller
+        function showDashboard(localOnly = false) {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('dashboard-section').style.display = 'block';
+
+            const badge = document.getElementById('admin-role-badge');
+            if (currentAdminRole === 'view') {
+                badge.innerText = 'View Only' + (localOnly ? ' (Local)' : '');
+                badge.style.backgroundColor = '#614d3c';
+            } else {
+                badge.innerText = 'Edit Access' + (localOnly ? ' (Local)' : '');
+                badge.style.backgroundColor = '#118007';
+            }
+
+            loadRegistrations();
+        }
+
+        // 5. Database Query
+        function loadRegistrations() {
+            const container = document.getElementById('admin-data-container');
+            container.innerHTML = `<div style="text-align: center; padding: 30px; font-size: 1.2rem; color: var(--text-muted);">Loading registrations...</div>`;
+            inlineEditingDocId = null;
+
+            firebaseDBPromise.then((activeDB) => {
+                if (activeDB) {
+                    activeDB.collection("registrations").orderBy("timestamp", "desc").get()
+                        .then((querySnapshot) => {
+                            registrationsData = [];
+                            querySnapshot.forEach((doc) => {
+                                const data = doc.data();
+                                registrationsData.push({
+                                    id: doc.id,
+                                    name: data.name || '',
+                                    contact: data.contact || '',
+                                    gender: data.gender || '',
+                                    address: data.address || '',
+                                    subject: data.subject || '',
+                                    occupation: data.occupation || '',
+                                    dob: data.dob || ''
+                                });
+                            });
+                            renderRegistrations();
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching Firestore registrations:", error);
+                            container.innerHTML = `
+                                <div style="color: #e12525; padding: 20px; text-align: center; font-weight: bold; border: 1.5px solid rgba(225, 37, 37, 0.2); background: rgba(225, 37, 37, 0.05); border-radius: 12px;">
+                                    Firestore query failed: ${error.message}
+                                </div>
+                            `;
+                        });
+                } else {
+                    // Fallback Mock Mode
+                    let mockData = JSON.parse(localStorage.getItem('mock_registrations'));
+                    if (!mockData) {
+                        mockData = [
+                            { id: 'mock-1', name: 'Rohan Sharma', contact: '9876543210', gender: 'Male', address: '12, Gorwa Road, Vadodara', subject: 'Leadership', occupation: 'Student' },
+                            { id: 'mock-2', name: 'Priya Patel', contact: '8765432109', gender: 'Female', address: 'A-402, Samrajya Flat, Vadodara', subject: 'Sanskrit', occupation: 'Teacher' },
+                            { id: 'mock-3', name: 'Jayesh Amit', contact: '7654321098', gender: 'Male', address: 'Subhanpura, Vadodara', subject: 'Nationalism', occupation: 'Business' }
+                        ];
+                        localStorage.setItem('mock_registrations', JSON.stringify(mockData));
+                    }
+                    registrationsData = mockData;
+                    renderRegistrations();
+                }
+            });
+        }
+
+        // 6. View Rendering
+        function renderRegistrations(filterQuery = '') {
+            const container = document.getElementById('admin-data-container');
+            const counter = document.getElementById('total-registrations');
+            
+            // Filter data
+            const filtered = registrationsData.filter(item => {
+                if (!filterQuery) return true;
+                return item.name.toLowerCase().includes(filterQuery) ||
+                       item.contact.includes(filterQuery) ||
+                       item.address.toLowerCase().includes(filterQuery) ||
+                       item.gender.toLowerCase().includes(filterQuery) ||
+                       (item.subject && item.subject.toLowerCase().includes(filterQuery)) ||
+                       (item.occupation && item.occupation.toLowerCase().includes(filterQuery));
+            });
+
+            counter.innerText = `Total: ${filtered.length}`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 1.1rem;">No registrations found.</div>`;
+                return;
+            }
+
+            // Desktop Table Builder
+            let tableHTML = `
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Mobile Number</th>
+                            <th>Gender</th>
+                            <th>Address</th>
+                            ${currentAdminRole === 'edit' ? '<th>Actions</th>' : ''}
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            // Mobile Cards Builder
+            let cardsHTML = `<div class="admin-cards-container">`;
+
+            filtered.forEach((reg) => {
+                const isEditing = (reg.id === inlineEditingDocId);
+
+                // 1. Desktop Row
+                tableHTML += `<tr id="row-${reg.id}">`;
+                if (isEditing) {
+                    tableHTML += `
+                        <td><input type="text" id="edit-name-${reg.id}" value="${escapeHtml(reg.name)}"></td>
+                        <td><input type="tel" id="edit-contact-${reg.id}" value="${escapeHtml(reg.contact)}" pattern="[0-9]{10}"></td>
+                        <td>
+                            <select id="edit-gender-${reg.id}">
+                                <option value="Male" ${reg.gender === 'Male' ? 'selected' : ''}>Male</option>
+                                <option value="Female" ${reg.gender === 'Female' ? 'selected' : ''}>Female</option>
+                                <option value="Other" ${reg.gender === 'Other' ? 'selected' : ''}>Other</option>
+                            </select>
+                        </td>
+                        <td><input type="text" id="edit-address-${reg.id}" value="${escapeHtml(reg.address)}"></td>
+                        <td>
+                            <button class="admin-action-btn admin-save-btn" onclick="saveAdminEdit('${reg.id}')">Save</button>
+                            <button class="admin-action-btn admin-cancel-btn" onclick="cancelAdminEdit()">Cancel</button>
+                        </td>
+                    `;
+                } else {
+                    tableHTML += `
+                        <td><strong>${escapeHtml(reg.name)}</strong></td>
+                        <td><a href="tel:${escapeHtml(reg.contact)}" class="admin-tel-link">📞 ${escapeHtml(reg.contact)}</a></td>
+                        <td>${escapeHtml(reg.gender)}</td>
+                        <td>${escapeHtml(reg.address)}</td>
+                        ${currentAdminRole === 'edit' ? `
+                            <td>
+                                <button class="admin-action-btn admin-edit-btn" onclick="startAdminEdit('${reg.id}')">Edit</button>
+                                <button class="admin-action-btn admin-delete-btn" onclick="deleteAdminRecord('${reg.id}')">Delete</button>
+                            </td>
+                        ` : ''}
+                    `;
+                }
+                tableHTML += `</tr>`;
+
+                // 2. Mobile Card
+                cardsHTML += `<div class="admin-user-card" id="card-${reg.id}">`;
+                if (isEditing) {
+                    cardsHTML += `
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Name</span>
+                            <div class="admin-card-value"><input type="text" id="edit-name-mob-${reg.id}" value="${escapeHtml(reg.name)}"></div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Mobile Number</span>
+                            <div class="admin-card-value"><input type="tel" id="edit-contact-mob-${reg.id}" value="${escapeHtml(reg.contact)}" pattern="[0-9]{10}"></div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Gender</span>
+                            <div class="admin-card-value">
+                                <select id="edit-gender-mob-${reg.id}">
+                                    <option value="Male" ${reg.gender === 'Male' ? 'selected' : ''}>Male</option>
+                                    <option value="Female" ${reg.gender === 'Female' ? 'selected' : ''}>Female</option>
+                                    <option value="Other" ${reg.gender === 'Other' ? 'selected' : ''}>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Address</span>
+                            <div class="admin-card-value"><input type="text" id="edit-address-mob-${reg.id}" value="${escapeHtml(reg.address)}"></div>
+                        </div>
+                        <div class="admin-card-actions">
+                            <button class="admin-action-btn admin-save-btn" onclick="saveAdminEdit('${reg.id}', true)">Save</button>
+                            <button class="admin-action-btn admin-cancel-btn" onclick="cancelAdminEdit()">Cancel</button>
+                        </div>
+                    `;
+                } else {
+                    cardsHTML += `
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Name</span>
+                            <div class="admin-card-value" style="font-weight: 700;">${escapeHtml(reg.name)}</div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Mobile Number</span>
+                            <div class="admin-card-value">
+                                <a href="tel:${escapeHtml(reg.contact)}" class="admin-tel-link">📞 ${escapeHtml(reg.contact)}</a>
+                            </div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Gender</span>
+                            <div class="admin-card-value">${escapeHtml(reg.gender)}</div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Address</span>
+                            <div class="admin-card-value">${escapeHtml(reg.address)}</div>
+                        </div>
+                        ${currentAdminRole === 'edit' ? `
+                            <div class="admin-card-actions">
+                                <button class="admin-action-btn admin-edit-btn" onclick="startAdminEdit('${reg.id}')">Edit</button>
+                                <button class="admin-action-btn admin-delete-btn" onclick="deleteAdminRecord('${reg.id}')">Delete</button>
+                            </div>
+                        ` : ''}
+                    `;
+                }
+                cardsHTML += `</div>`;
+            });
+
+            tableHTML += `</tbody></table>`;
+            cardsHTML += `</div>`;
+
+            container.innerHTML = tableHTML + cardsHTML;
+        }
+
+        // 7. Actions Bindings
+        window.startAdminEdit = function(id) {
+            inlineEditingDocId = id;
+            const searchVal = document.getElementById('search-input').value.trim().toLowerCase();
+            renderRegistrations(searchVal);
+        };
+
+        window.cancelAdminEdit = function() {
+            inlineEditingDocId = null;
+            const searchVal = document.getElementById('search-input').value.trim().toLowerCase();
+            renderRegistrations(searchVal);
+        };
+
+        window.saveAdminEdit = function(id, isMobile = false) {
+            const suffix = isMobile ? '-mob' : '';
+            const newName = document.getElementById(`edit-name${suffix}-${id}`).value.trim();
+            const newContact = document.getElementById(`edit-contact${suffix}-${id}`).value.trim();
+            const newGender = document.getElementById(`edit-gender${suffix}-${id}`).value;
+            const newAddress = document.getElementById(`edit-address${suffix}-${id}`).value.trim();
+            
+            if (!newName || !newContact || !newAddress) {
+                alert("All fields are required.");
+                return;
+            }
+            if (!/^[0-9]{10}$/.test(newContact)) {
+                alert("Mobile Number must be exactly 10 digits.");
+                return;
+            }
+
+            firebaseDBPromise.then((activeDB) => {
+                if (activeDB) {
+                    activeDB.collection("registrations").doc(id).update({
+                        name: newName,
+                        contact: newContact,
+                        gender: newGender,
+                        address: newAddress
+                    })
+                    .then(() => {
+                        inlineEditingDocId = null;
+                        loadRegistrations();
+                    })
+                    .catch((error) => {
+                        alert("Failed to update record: " + error.message);
+                    });
+                } else {
+                    const idx = registrationsData.findIndex(r => r.id === id);
+                    if (idx > -1) {
+                        registrationsData[idx].name = newName;
+                        registrationsData[idx].contact = newContact;
+                        registrationsData[idx].gender = newGender;
+                        registrationsData[idx].address = newAddress;
+                        localStorage.setItem('mock_registrations', JSON.stringify(registrationsData));
+                    }
+                    inlineEditingDocId = null;
+                    renderRegistrations();
+                }
+            });
+        };
+
+        window.deleteAdminRecord = function(id) {
+            const record = registrationsData.find(r => r.id === id);
+            if (!record) return;
+            
+            if (confirm(`Are you sure you want to delete registration for "${record.name}"?`)) {
+                firebaseDBPromise.then((activeDB) => {
+                    if (activeDB) {
+                        activeDB.collection("registrations").doc(id).delete()
+                        .then(() => {
+                            loadRegistrations();
+                        })
+                        .catch((error) => {
+                            alert("Failed to delete record: " + error.message);
+                        });
+                    } else {
+                        registrationsData = registrationsData.filter(r => r.id !== id);
+                        localStorage.setItem('mock_registrations', JSON.stringify(registrationsData));
+                        renderRegistrations();
+                    }
+                });
+            }
+        };
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return String(text).replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>
