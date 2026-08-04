@@ -172,6 +172,7 @@
                     </h2>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button id="admin-refresh-btn" class="nav-register-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer;">Refresh</button>
+                        <button id="admin-pdf-btn" class="nav-register-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer; background: linear-gradient(135deg, #002b49 0%, #104f7c 100%); box-shadow: 0 4px 15px rgba(0, 43, 73, 0.2);">Download PDF</button>
                         <button id="admin-logout-btn" class="nav-register-btn admin-logout-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer;">Logout</button>
                     </div>
                 </div>
@@ -197,6 +198,10 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="firebase-config.js"></script>
+
+    <!-- jsPDF & AutoTable CDNs for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
     <script>
         // 1. Initialize Particles Background
@@ -390,7 +395,98 @@
             searchInput.addEventListener('input', () => {
                 renderRegistrations(searchInput.value.trim().toLowerCase());
             });
+
+            // PDF Download Handler
+            const pdfBtn = document.getElementById('admin-pdf-btn');
+            if (pdfBtn) {
+                pdfBtn.addEventListener('click', downloadPDF);
+            }
         });
+
+        // 3b. PDF Exporter
+        function downloadPDF() {
+            const filterQuery = document.getElementById('search-input').value.trim().toLowerCase();
+            const filtered = registrationsData.filter(item => {
+                if (!filterQuery) return true;
+                return item.name.toLowerCase().includes(filterQuery) ||
+                       item.contact.includes(filterQuery) ||
+                       item.address.toLowerCase().includes(filterQuery) ||
+                       item.gender.toLowerCase().includes(filterQuery) ||
+                       (item.subject && item.subject.toLowerCase().includes(filterQuery)) ||
+                       (item.occupation && item.occupation.toLowerCase().includes(filterQuery));
+            });
+
+            if (filtered.length === 0) {
+                alert("No data available to download.");
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape'); // Landscape to fit all columns nicely
+
+            // Header info
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(20);
+            doc.setTextColor(230, 92, 0); // Saffron
+            doc.text("YUVA SANGAM CONVENTION", 14, 18);
+
+            doc.setFontSize(14);
+            doc.setTextColor(0, 43, 73); // Navy
+            doc.text("Registered Participants Report", 14, 26);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            const dateStr = new Date().toLocaleString();
+            doc.text(`Generated: ${dateStr} | Records Count: ${filtered.length}`, 14, 33);
+
+            // Columns mapping
+            const columns = [
+                { title: "S.No", dataKey: "index" },
+                { title: "Full Name", dataKey: "name" },
+                { title: "Mobile Number", dataKey: "contact" },
+                { title: "Gender", dataKey: "gender" },
+                { title: "Occupation", dataKey: "occupation" },
+                { title: "Subject", dataKey: "subject" },
+                { title: "Address", dataKey: "address" }
+            ];
+
+            // Rows data mapping
+            const rows = filtered.map((item, idx) => ({
+                index: idx + 1,
+                name: item.name || '-',
+                contact: item.contact || '-',
+                gender: item.gender || '-',
+                occupation: item.occupation || '-',
+                subject: item.subject || '-',
+                address: item.address || '-'
+            }));
+
+            // PDF Table generator
+            doc.autoTable({
+                columns: columns,
+                body: rows,
+                startY: 38,
+                theme: 'striped',
+                headStyles: {
+                    fillColor: [230, 92, 0], // Saffron header
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold',
+                    fontSize: 10
+                },
+                bodyStyles: {
+                    fontSize: 9
+                },
+                alternateRowStyles: {
+                    fillColor: [255, 252, 248]
+                },
+                margin: { top: 38, left: 14, right: 14 }
+            });
+
+            // Save the generated document
+            const filename = `Yuva_Sangam_Participants_${new Date().toISOString().slice(0, 10)}.pdf`;
+            doc.save(filename);
+        }
 
         // 4. Dashboard View Controller
         function showDashboard(localOnly = false) {
