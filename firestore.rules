@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /registrations/{document} {
+      // Anyone can register
+      allow create: if true;
+      
+      // Only the two specific authenticated admins can read registration records
+      allow read: if request.auth != null && (request.auth.token.email == 'mayur@admin.com' || request.auth.token.email == 'mayuredit@admin.com');
+      
+      // Only the edit-admin can modify or delete registration records
+      allow update, delete: if request.auth != null && request.auth.token.email == 'mayuredit@admin.com';
+    }
+  }
+}
