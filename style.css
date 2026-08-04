@@ -109,22 +109,50 @@ body::after {
     display: none;
 }
 
-/* Top Banner Shloka */
-.top-banner {
-    width: 100%;
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 20px;
+/* Devgiri Font and RSS Banners */
+.devgiri-font {
+    font-family: 'Devgiri', 'Yatra One', 'Noto Sans Devanagari', sans-serif;
 }
 
-.shloka-text {
-    font-family: 'Baloo Bhai 2', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
+.top-org-bar {
+    width: 100%;
+    background: linear-gradient(90deg, #b33600 0%, #e65c00 50%, #b33600 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 101;
+}
+
+.rss-hero-title {
+    font-family: 'Devgiri', 'Yatra One', 'Noto Sans Devanagari', sans-serif;
+    font-size: 2.2rem;
     color: var(--saffron-bright);
-    letter-spacing: 2px;
-    text-shadow: none;
-    animation: pulseGlow 3s ease-in-out infinite;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-shadow: 0 0 10px rgba(255, 111, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .rss-hero-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-org-bar {
+        font-size: 0.95rem;
+        padding: 6px 10px;
+        letter-spacing: 0.5px;
+    }
+    .rss-hero-title {
+        font-size: 1.45rem;
+    }
 }
 
 /* Navigation Bar */
