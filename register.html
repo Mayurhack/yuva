@@ -157,6 +157,10 @@
                         <input type="text" id="reg-rss-question" placeholder="Your questions..." data-i18n-placeholder="reg-placeholder-rss-question">
                     </div>
                     <div class="form-group">
+                        <label for="reg-reference" data-i18n="reg-label-reference">Reference / Referred By</label>
+                        <input type="text" id="reg-reference" placeholder="Who referred you?" data-i18n-placeholder="reg-placeholder-reference">
+                    </div>
+                    <div class="form-group">
                         <label for="reg-address" data-i18n="reg-label-address">Address</label>
                         <textarea id="reg-address" required placeholder="Enter your full address" data-i18n-placeholder="reg-placeholder-address" rows="3"></textarea>
                     </div>
@@ -230,6 +234,7 @@
                     const occupation = document.getElementById('reg-occupation') ? document.getElementById('reg-occupation').value : '';
                     const dob = document.getElementById('reg-dob') ? document.getElementById('reg-dob').value : '';
                     const rssQuestion = document.getElementById('reg-rss-question') ? document.getElementById('reg-rss-question').value : '';
+                    const reference = document.getElementById('reg-reference') ? document.getElementById('reg-reference').value : '';
                     const address = document.getElementById('reg-address') ? document.getElementById('reg-address').value : '';
 
                     const handleSuccess = () => {
@@ -265,6 +270,7 @@
                                 occupation,
                                 dob,
                                 rssQuestion,
+                                reference,
                                 address,
                                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
                             })

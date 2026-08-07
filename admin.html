@@ -449,6 +449,7 @@
                 { title: "Occupation", dataKey: "occupation" },
                 { title: "Interest", dataKey: "subject" },
                 { title: "RSS Question", dataKey: "rssQuestion" },
+                { title: "Reference", dataKey: "reference" },
                 { title: "Address", dataKey: "address" }
             ];
 
@@ -461,6 +462,7 @@
                 occupation: item.occupation || '-',
                 subject: item.subject || '-',
                 rssQuestion: item.rssQuestion || '-',
+                reference: item.reference || '-',
                 address: item.address || '-'
             }));
 
@@ -529,7 +531,8 @@
                                     subject: data.subject || '',
                                     occupation: data.occupation || '',
                                     dob: data.dob || '',
-                                    rssQuestion: data.rssQuestion || ''
+                                    rssQuestion: data.rssQuestion || '',
+                                    reference: data.reference || ''
                                 });
                             });
                             renderRegistrations();
@@ -547,9 +550,9 @@
                     let mockData = JSON.parse(localStorage.getItem('mock_registrations'));
                     if (!mockData) {
                         mockData = [
-                            { id: 'mock-1', name: 'Rohan Sharma', contact: '9876543210', gender: 'Male', address: '12, Gorwa Road, Vadodara', subject: '૧.સેવા', occupation: 'Student', rssQuestion: 'No questions' },
-                            { id: 'mock-2', name: 'Priya Patel', contact: '8765432109', gender: 'Female', address: 'A-402, Samrajya Flat, Vadodara', subject: '૨.સંઘકાર્ય', occupation: 'Teacher', rssQuestion: 'How to participate in shivir?' },
-                            { id: 'mock-3', name: 'Jayesh Amit', contact: '7654321098', gender: 'Male', address: 'Subhanpura, Vadodara', subject: '૪.સ્વદેશી', occupation: 'Business', rssQuestion: '' }
+                            { id: 'mock-1', name: 'Rohan Sharma', contact: '9876543210', gender: 'Male', address: '12, Gorwa Road, Vadodara', subject: '૧.સેવા', occupation: 'Student', rssQuestion: 'No questions', reference: 'Friend' },
+                            { id: 'mock-2', name: 'Priya Patel', contact: '8765432109', gender: 'Female', address: 'A-402, Samrajya Flat, Vadodara', subject: '૨.સંઘકાર્ય', occupation: 'Teacher', rssQuestion: 'How to participate in shivir?', reference: 'Social Media' },
+                            { id: 'mock-3', name: 'Jayesh Amit', contact: '7654321098', gender: 'Male', address: 'Subhanpura, Vadodara', subject: '૪.સ્વદેશી', occupation: 'Business', rssQuestion: '', reference: '' }
                         ];
                         localStorage.setItem('mock_registrations', JSON.stringify(mockData));
                     }
@@ -573,7 +576,8 @@
                        item.gender.toLowerCase().includes(filterQuery) ||
                        (item.subject && item.subject.toLowerCase().includes(filterQuery)) ||
                        (item.occupation && item.occupation.toLowerCase().includes(filterQuery)) ||
-                       (item.rssQuestion && item.rssQuestion.toLowerCase().includes(filterQuery));
+                       (item.rssQuestion && item.rssQuestion.toLowerCase().includes(filterQuery)) ||
+                       (item.reference && item.reference.toLowerCase().includes(filterQuery));
             });
 
             counter.innerText = `Total: ${filtered.length}`;
@@ -593,6 +597,7 @@
                             <th>Gender</th>
                             <th>Interest</th>
                             <th>RSS Question</th>
+                            <th>Reference</th>
                             <th>Address</th>
                             ${currentAdminRole === 'edit' ? '<th>Actions</th>' : ''}
                         </tr>
@@ -629,6 +634,7 @@
                             </select>
                         </td>
                         <td><input type="text" id="edit-rssQuestion-${reg.id}" value="${escapeHtml(reg.rssQuestion)}"></td>
+                        <td><input type="text" id="edit-reference-${reg.id}" value="${escapeHtml(reg.reference)}"></td>
                         <td><input type="text" id="edit-address-${reg.id}" value="${escapeHtml(reg.address)}"></td>
                         <td>
                             <button class="admin-action-btn admin-save-btn" onclick="saveAdminEdit('${reg.id}')">Save</button>
@@ -642,6 +648,7 @@
                         <td>${escapeHtml(reg.gender)}</td>
                         <td>${escapeHtml(reg.subject || '-')}</td>
                         <td>${escapeHtml(reg.rssQuestion || '-')}</td>
+                        <td>${escapeHtml(reg.reference || '-')}</td>
                         <td>${escapeHtml(reg.address)}</td>
                         ${currentAdminRole === 'edit' ? `
                             <td>
@@ -692,6 +699,10 @@
                             <div class="admin-card-value"><input type="text" id="edit-rssQuestion-mob-${reg.id}" value="${escapeHtml(reg.rssQuestion)}"></div>
                         </div>
                         <div class="admin-card-row">
+                            <span class="admin-card-label">Reference</span>
+                            <div class="admin-card-value"><input type="text" id="edit-reference-mob-${reg.id}" value="${escapeHtml(reg.reference)}"></div>
+                        </div>
+                        <div class="admin-card-row">
                             <span class="admin-card-label">Address</span>
                             <div class="admin-card-value"><input type="text" id="edit-address-mob-${reg.id}" value="${escapeHtml(reg.address)}"></div>
                         </div>
@@ -723,6 +734,10 @@
                         <div class="admin-card-row">
                             <span class="admin-card-label">RSS Question</span>
                             <div class="admin-card-value">${escapeHtml(reg.rssQuestion || '-')}</div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Reference</span>
+                            <div class="admin-card-value">${escapeHtml(reg.reference || '-')}</div>
                         </div>
                         <div class="admin-card-row">
                             <span class="admin-card-label">Address</span>
@@ -765,6 +780,7 @@
             const newGender = document.getElementById(`edit-gender${suffix}-${id}`).value;
             const newSubject = document.getElementById(`edit-subject${suffix}-${id}`).value;
             const newRssQuestion = document.getElementById(`edit-rssQuestion${suffix}-${id}`).value.trim();
+            const newReference = document.getElementById(`edit-reference${suffix}-${id}`).value.trim();
             const newAddress = document.getElementById(`edit-address${suffix}-${id}`).value.trim();
             
             if (!newName || !newContact || !newAddress) {
@@ -784,6 +800,7 @@
                         gender: newGender,
                         subject: newSubject,
                         rssQuestion: newRssQuestion,
+                        reference: newReference,
                         address: newAddress
                     })
                     .then(() => {
@@ -801,6 +818,7 @@
                         registrationsData[idx].gender = newGender;
                         registrationsData[idx].subject = newSubject;
                         registrationsData[idx].rssQuestion = newRssQuestion;
+                        registrationsData[idx].reference = newReference;
                         registrationsData[idx].address = newAddress;
                         localStorage.setItem('mock_registrations', JSON.stringify(registrationsData));
                     }

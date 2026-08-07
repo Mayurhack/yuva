@@ -265,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const occupation = regForm.querySelector('#reg-occupation') ? regForm.querySelector('#reg-occupation').value : '';
             const dob = regForm.querySelector('#reg-dob') ? regForm.querySelector('#reg-dob').value : '';
             const rssQuestion = regForm.querySelector('#reg-rss-question') ? regForm.querySelector('#reg-rss-question').value : '';
+            const reference = regForm.querySelector('#reg-reference') ? regForm.querySelector('#reg-reference').value : '';
             const address = regForm.querySelector('#reg-address') ? regForm.querySelector('#reg-address').value : '';
 
             const handleSuccess = () => {
@@ -294,6 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         occupation,
                         dob,
                         rssQuestion,
+                        reference,
                         address,
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     })
