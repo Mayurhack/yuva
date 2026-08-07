@@ -447,7 +447,8 @@
                 { title: "Mobile Number", dataKey: "contact" },
                 { title: "Gender", dataKey: "gender" },
                 { title: "Occupation", dataKey: "occupation" },
-                { title: "Subject", dataKey: "subject" },
+                { title: "Interest", dataKey: "subject" },
+                { title: "RSS Question", dataKey: "rssQuestion" },
                 { title: "Address", dataKey: "address" }
             ];
 
@@ -459,6 +460,7 @@
                 gender: item.gender || '-',
                 occupation: item.occupation || '-',
                 subject: item.subject || '-',
+                rssQuestion: item.rssQuestion || '-',
                 address: item.address || '-'
             }));
 
@@ -526,7 +528,8 @@
                                     address: data.address || '',
                                     subject: data.subject || '',
                                     occupation: data.occupation || '',
-                                    dob: data.dob || ''
+                                    dob: data.dob || '',
+                                    rssQuestion: data.rssQuestion || ''
                                 });
                             });
                             renderRegistrations();
@@ -544,9 +547,9 @@
                     let mockData = JSON.parse(localStorage.getItem('mock_registrations'));
                     if (!mockData) {
                         mockData = [
-                            { id: 'mock-1', name: 'Rohan Sharma', contact: '9876543210', gender: 'Male', address: '12, Gorwa Road, Vadodara', subject: 'Leadership', occupation: 'Student' },
-                            { id: 'mock-2', name: 'Priya Patel', contact: '8765432109', gender: 'Female', address: 'A-402, Samrajya Flat, Vadodara', subject: 'Sanskrit', occupation: 'Teacher' },
-                            { id: 'mock-3', name: 'Jayesh Amit', contact: '7654321098', gender: 'Male', address: 'Subhanpura, Vadodara', subject: 'Nationalism', occupation: 'Business' }
+                            { id: 'mock-1', name: 'Rohan Sharma', contact: '9876543210', gender: 'Male', address: '12, Gorwa Road, Vadodara', subject: '૧.સેવા', occupation: 'Student', rssQuestion: 'No questions' },
+                            { id: 'mock-2', name: 'Priya Patel', contact: '8765432109', gender: 'Female', address: 'A-402, Samrajya Flat, Vadodara', subject: '૨.સંઘકાર્ય', occupation: 'Teacher', rssQuestion: 'How to participate in shivir?' },
+                            { id: 'mock-3', name: 'Jayesh Amit', contact: '7654321098', gender: 'Male', address: 'Subhanpura, Vadodara', subject: '૪.સ્વદેશી', occupation: 'Business', rssQuestion: '' }
                         ];
                         localStorage.setItem('mock_registrations', JSON.stringify(mockData));
                     }
@@ -569,7 +572,8 @@
                        item.address.toLowerCase().includes(filterQuery) ||
                        item.gender.toLowerCase().includes(filterQuery) ||
                        (item.subject && item.subject.toLowerCase().includes(filterQuery)) ||
-                       (item.occupation && item.occupation.toLowerCase().includes(filterQuery));
+                       (item.occupation && item.occupation.toLowerCase().includes(filterQuery)) ||
+                       (item.rssQuestion && item.rssQuestion.toLowerCase().includes(filterQuery));
             });
 
             counter.innerText = `Total: ${filtered.length}`;
@@ -587,6 +591,8 @@
                             <th>Name</th>
                             <th>Mobile Number</th>
                             <th>Gender</th>
+                            <th>Interest</th>
+                            <th>RSS Question</th>
                             <th>Address</th>
                             ${currentAdminRole === 'edit' ? '<th>Actions</th>' : ''}
                         </tr>
@@ -613,6 +619,16 @@
                                 <option value="Other" ${reg.gender === 'Other' ? 'selected' : ''}>Other</option>
                             </select>
                         </td>
+                        <td>
+                            <select id="edit-subject-${reg.id}">
+                                <option value="૧.સેવા" ${reg.subject === '૧.સેવા' ? 'selected' : ''}>1. Service (Seva)</option>
+                                <option value="૨.સંઘકાર્ય" ${reg.subject === '૨.સંઘકાર્ય' ? 'selected' : ''}>2. Association Work (Sanghkarya)</option>
+                                <option value="૪.સ્વદેશી" ${reg.subject === '૪.સ્વદેશી' ? 'selected' : ''}>3. Swadeshi</option>
+                                <option value="૫.પર્યાવરણ" ${reg.subject === '૫.પર્યાવરણ' ? 'selected' : ''}>4. Environment (Paryavaran)</option>
+                                <option value="૬.પ્રચાર (સોશિયલ મિડિયા)" ${reg.subject === '૬.પ્રચાર (સોશિયલ મિડિયા)' ? 'selected' : ''}>5. Publicity (Social Media)</option>
+                            </select>
+                        </td>
+                        <td><input type="text" id="edit-rssQuestion-${reg.id}" value="${escapeHtml(reg.rssQuestion)}"></td>
                         <td><input type="text" id="edit-address-${reg.id}" value="${escapeHtml(reg.address)}"></td>
                         <td>
                             <button class="admin-action-btn admin-save-btn" onclick="saveAdminEdit('${reg.id}')">Save</button>
@@ -624,6 +640,8 @@
                         <td><strong>${escapeHtml(reg.name)}</strong></td>
                         <td><a href="tel:${escapeHtml(reg.contact)}" class="admin-tel-link">📞 ${escapeHtml(reg.contact)}</a></td>
                         <td>${escapeHtml(reg.gender)}</td>
+                        <td>${escapeHtml(reg.subject || '-')}</td>
+                        <td>${escapeHtml(reg.rssQuestion || '-')}</td>
                         <td>${escapeHtml(reg.address)}</td>
                         ${currentAdminRole === 'edit' ? `
                             <td>
@@ -658,6 +676,22 @@
                             </div>
                         </div>
                         <div class="admin-card-row">
+                            <span class="admin-card-label">Interest</span>
+                            <div class="admin-card-value">
+                                <select id="edit-subject-mob-${reg.id}">
+                                    <option value="૧.સેવા" ${reg.subject === '૧.સેવા' ? 'selected' : ''}>1. Service (Seva)</option>
+                                    <option value="૨.સંઘકાર્ય" ${reg.subject === '૨.સંઘકાર્ય' ? 'selected' : ''}>2. Association Work (Sanghkarya)</option>
+                                    <option value="૪.સ્વદેશી" ${reg.subject === '૪.સ્વદેશી' ? 'selected' : ''}>3. Swadeshi</option>
+                                    <option value="૫.પર્યાવરણ" ${reg.subject === '૫.પર્યાવરણ' ? 'selected' : ''}>4. Environment (Paryavaran)</option>
+                                    <option value="૬.પ્રચાર (સોશિયલ મિડિયા)" ${reg.subject === '૬.પ્રચાર (સોશિયલ મિડિયા)' ? 'selected' : ''}>5. Publicity (Social Media)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">RSS Question</span>
+                            <div class="admin-card-value"><input type="text" id="edit-rssQuestion-mob-${reg.id}" value="${escapeHtml(reg.rssQuestion)}"></div>
+                        </div>
+                        <div class="admin-card-row">
                             <span class="admin-card-label">Address</span>
                             <div class="admin-card-value"><input type="text" id="edit-address-mob-${reg.id}" value="${escapeHtml(reg.address)}"></div>
                         </div>
@@ -681,6 +715,14 @@
                         <div class="admin-card-row">
                             <span class="admin-card-label">Gender</span>
                             <div class="admin-card-value">${escapeHtml(reg.gender)}</div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">Interest</span>
+                            <div class="admin-card-value">${escapeHtml(reg.subject || '-')}</div>
+                        </div>
+                        <div class="admin-card-row">
+                            <span class="admin-card-label">RSS Question</span>
+                            <div class="admin-card-value">${escapeHtml(reg.rssQuestion || '-')}</div>
                         </div>
                         <div class="admin-card-row">
                             <span class="admin-card-label">Address</span>
@@ -721,6 +763,8 @@
             const newName = document.getElementById(`edit-name${suffix}-${id}`).value.trim();
             const newContact = document.getElementById(`edit-contact${suffix}-${id}`).value.trim();
             const newGender = document.getElementById(`edit-gender${suffix}-${id}`).value;
+            const newSubject = document.getElementById(`edit-subject${suffix}-${id}`).value;
+            const newRssQuestion = document.getElementById(`edit-rssQuestion${suffix}-${id}`).value.trim();
             const newAddress = document.getElementById(`edit-address${suffix}-${id}`).value.trim();
             
             if (!newName || !newContact || !newAddress) {
@@ -738,6 +782,8 @@
                         name: newName,
                         contact: newContact,
                         gender: newGender,
+                        subject: newSubject,
+                        rssQuestion: newRssQuestion,
                         address: newAddress
                     })
                     .then(() => {
@@ -753,6 +799,8 @@
                         registrationsData[idx].name = newName;
                         registrationsData[idx].contact = newContact;
                         registrationsData[idx].gender = newGender;
+                        registrationsData[idx].subject = newSubject;
+                        registrationsData[idx].rssQuestion = newRssQuestion;
                         registrationsData[idx].address = newAddress;
                         localStorage.setItem('mock_registrations', JSON.stringify(registrationsData));
                     }
