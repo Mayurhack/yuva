@@ -195,10 +195,6 @@
                     </div>
                 </div>
                 <div style="text-align: center; margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                    <button id="whatsapp-confirm-btn" class="action-btn" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); border: none; max-width: 280px; width: 100%; cursor: pointer;">
-                        <span class="btn-text" data-i18n="invite-whatsapp-btn">Get WhatsApp Confirmation</span>
-                        <span class="btn-glow"></span>
-                    </button>
                     <a href="index.html" class="action-btn" style="text-decoration: none; display: inline-block; max-width: 280px; width: 100%;">
                         <span class="btn-text" data-i18n="invite-back-btn">Back to Home Page</span>
                         <span class="btn-glow"></span>
@@ -225,35 +221,6 @@
             const pageForm = document.getElementById('page-reg-form');
             const regCard = document.getElementById('reg-card-content');
             const inviteWrapper = document.getElementById('invite-card-wrapper');
-
-            const whatsappConfirmBtn = document.getElementById('whatsapp-confirm-btn');
-            if (whatsappConfirmBtn) {
-                whatsappConfirmBtn.addEventListener('click', () => {
-                    const name = document.getElementById('reg-name') ? document.getElementById('reg-name').value : '';
-                    const contact = document.getElementById('reg-contact') ? document.getElementById('reg-contact').value : '';
-                    
-                    if (!name || !contact) {
-                        alert("Please fill in your name and contact number first.");
-                        return;
-                    }
-
-                    try {
-                        const currentLang = localStorage.getItem('selectedLanguage') || 'en';
-                        let template = (translations && translations[currentLang] && translations[currentLang]["whatsapp-msg-template"])
-                            ? translations[currentLang]["whatsapp-msg-template"]
-                            : "🚩 *Yuva Sangam Convention* 🚩\n\nNamaste *{name}*,\nYour registration for the Yuva Sangam Convention has been successfully received!\n\n📅 *Date:* 23 August 2026, Sunday\n⏰ *Time:* 3:00 PM\n📍 *Venue:* Sapna na vavetar hall, Samta, Vadodara.\n\n*Courtesy:* Gorwa Nagar Organisation\n🚩 Jai Hind! Jai Bharat! 🚩";
-                        const msgText = template.replace('{name}', name);
-                        let formattedContact = contact.trim().replace(/\D/g, '');
-                        if (formattedContact.length === 10) {
-                            formattedContact = '91' + formattedContact;
-                        }
-                        const waUrl = `https://api.whatsapp.com/send?phone=${formattedContact}&text=${encodeURIComponent(msgText)}`;
-                        window.open(waUrl, '_blank');
-                    } catch (e) {
-                        console.error("Error opening WhatsApp link:", e);
-                    }
-                });
-            }
 
             if (pageForm) {
                 pageForm.addEventListener('submit', (e) => {
@@ -290,23 +257,6 @@
                             // Scroll to top of window to see the invite card clearly
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         }, 400);
-
-                        // Open WhatsApp confirmation message
-                        try {
-                            const currentLang = localStorage.getItem('selectedLanguage') || 'en';
-                            let template = (translations && translations[currentLang] && translations[currentLang]["whatsapp-msg-template"])
-                                ? translations[currentLang]["whatsapp-msg-template"]
-                                : "🚩 *Yuva Sangam Convention* 🚩\n\nNamaste *{name}*,\nYour registration for the Yuva Sangam Convention has been successfully received!\n\n📅 *Date:* 23 August 2026, Sunday\n⏰ *Time:* 3:00 PM\n📍 *Venue:* Sapna na vavetar hall, Samta, Vadodara.\n\n*Courtesy:* Gorwa Nagar Organisation\n🚩 Jai Hind! Jai Bharat! 🚩";
-                            const msgText = template.replace('{name}', name);
-                            let formattedContact = contact.trim().replace(/\D/g, '');
-                            if (formattedContact.length === 10) {
-                                formattedContact = '91' + formattedContact;
-                            }
-                            const waUrl = `https://api.whatsapp.com/send?phone=${formattedContact}&text=${encodeURIComponent(msgText)}`;
-                            window.open(waUrl, '_blank');
-                        } catch (e) {
-                            console.error("Error opening WhatsApp link:", e);
-                        }
                     };
 
                     const submitRegistration = (database) => {
