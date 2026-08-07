@@ -282,6 +282,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Reset form for future use
                 regForm.reset();
+
+                // Open WhatsApp confirmation message
+                try {
+                    const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+                    let template = (translations && translations[currentLang] && translations[currentLang]["whatsapp-msg-template"])
+                        ? translations[currentLang]["whatsapp-msg-template"]
+                        : "🚩 *Yuva Sangam Convention* 🚩\n\nNamaste *{name}*,\nYour registration for the Yuva Sangam Convention has been successfully received!\n\n📅 *Date:* 23 August 2026, Sunday\n⏰ *Time:* 3:00 PM\n📍 *Venue:* Sapna na vavetar hall, Samta, Vadodara.\n\n*Courtesy:* Gorwa Nagar Organisation\n🚩 Jai Hind! Jai Bharat! 🚩";
+                    const msgText = template.replace('{name}', name);
+                    let formattedContact = contact.trim().replace(/\D/g, '');
+                    if (formattedContact.length === 10) {
+                        formattedContact = '91' + formattedContact;
+                    }
+                    const waUrl = `https://api.whatsapp.com/send?phone=${formattedContact}&text=${encodeURIComponent(msgText)}`;
+                    window.open(waUrl, '_blank');
+                } catch (e) {
+                    console.error("Error opening WhatsApp link:", e);
+                }
             };
 
             const submitRegistration = (database) => {

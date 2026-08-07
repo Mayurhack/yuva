@@ -40,6 +40,7 @@ const translations = {
         "reg-label-address": "Address",
         "reg-placeholder-address": "Enter your full address",
         "reg-submit-btn": "Submit",
+        "whatsapp-msg-template": "🚩 *Yuva Sangam Convention* 🚩\n\nNamaste *{name}*,\nYour registration for the Yuva Sangam Convention has been successfully received!\n\n📅 *Date:* 23 August 2026, Sunday\n⏰ *Time:* 3:00 PM\n📍 *Venue:* Sapna na vavetar hall, Samta, Vadodara.\n\n*Courtesy:* Gorwa Nagar Organisation\n🚩 Jai Hind! Jai Bharat! 🚩",
 
         // Feature section heading
         "features-heading-highlight": "Why Join",
@@ -109,6 +110,7 @@ const translations = {
         "invite-detail-venue": "📍 <strong>Venue:</strong> Sapna na vavetar hall, Samta, Vadodara.",
         "invite-signature": "Courtesy: Gorwa Nagar Organisation",
         "invite-salute": "🚩 Jai Hind! Jai Bharat! 🚩",
+        "invite-whatsapp-btn": "Get WhatsApp Confirmation",
         "invite-back-btn": "Back to Home Page"
     },
     gu: {
@@ -152,6 +154,7 @@ const translations = {
         "reg-label-address": "સરનામું (Address)",
         "reg-placeholder-address": "તમારું પૂરું સરનામું લખો",
         "reg-submit-btn": "સબમિટ કરો",
+        "whatsapp-msg-template": "🚩 *યુવા સંગમ સંમેલન (Yuva Sangam)* 🚩\n\nનમસ્તે *{name}*,\nયુવા સંગમ સંમેલન માટે આપનું રજીસ્ટ્રેશન સફળતાપૂર્વક થઈ ગયું છે!\n\n📅 *તારીખ:* ૨૩ ઓગસ્ટ ૨૦૨૬, રવિવાર\n⏰ *સમય:* બપોરે ૩:૦૦ વાગે\n📍 *સ્થાન:* સપના ના વાવેતર હોલ, સમતા, વડોદરા\n\n*નિમંત્રક:* ગોરવા નગર સંગઠન\n🚩 જય હિન્દ! જય ભારત! 🚩",
 
         // Feature section heading
         "features-heading-highlight": "સંમેલનમાં",
@@ -221,6 +224,7 @@ const translations = {
         "invite-detail-venue": "📍 <strong>સ્થાન:</strong> સપના ના વાવેતર હોલ, સમતા, વડોદરા",
         "invite-signature": "સૌજન્ય: ગોરવા નગર સંગઠન",
         "invite-salute": "🚩 જય હિન્દ! જય ભારત! 🚩",
+        "invite-whatsapp-btn": "વોટ્સએપ પર કન્ફર્મેશન મેળવો",
         "invite-back-btn": "મુખ્ય પૃષ્ઠ પર પાછા જાઓ"
     },
     hi: {
@@ -264,6 +268,7 @@ const translations = {
         "reg-label-address": "पता (Address)",
         "reg-placeholder-address": "अपना पूरा पता लिखें",
         "reg-submit-btn": "जमा करें",
+        "whatsapp-msg-template": "🚩 *युवा संगम सम्मेलन (Yuva Sangam)* 🚩\n\nनमस्ते *{name}*,\nयुवा संगम सम्मेलन के लिए आपका पंजीकरण सफलतापूर्वक हो गया है!\n\n📅 *दिनांक:* 23 अगस्त 2026, रविवार\n⏰ *समय:* दोपहर 3:00 बजे\n📍 *स्थान:* सपना ना वावेतर हॉल, समता, वडोदरा\n\n*सौजन्य:* गोरवा नगर संगठन\n🚩 जय हिंद। जय भारत। 🚩",
 
         // Feature section heading
         "features-heading-highlight": "सम्मेलन में",
@@ -333,6 +338,7 @@ const translations = {
         "invite-detail-venue": "📍 <strong>स्थान:</strong> सपना ना वावेतर हॉल, समता, वडोदरा",
         "invite-signature": "सौजन्य: गोरवा नगर संगठन",
         "invite-salute": "🚩 जय हिन्द! जय भारत! 🚩",
+        "invite-whatsapp-btn": "व्हाट्सएप पर पुष्टिकरण प्राप्त करें",
         "invite-back-btn": "मुख्य पृष्ठ पर वापस जाएं"
     }
 };
