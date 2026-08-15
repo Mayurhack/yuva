@@ -173,6 +173,7 @@
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button id="admin-refresh-btn" class="nav-register-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer;">Refresh</button>
                         <button id="admin-pdf-btn" class="nav-register-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer; background: linear-gradient(135deg, #002b49 0%, #104f7c 100%); box-shadow: 0 4px 15px rgba(0, 43, 73, 0.2);">Download PDF</button>
+                        <button id="admin-excel-btn" class="nav-register-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer; background: linear-gradient(135deg, #118007 0%, #0d5e05 100%); box-shadow: 0 4px 15px rgba(17, 128, 7, 0.2); margin-left: 5px;">Download Excel</button>
                         <button id="admin-logout-btn" class="nav-register-btn admin-logout-btn" style="padding: 8px 20px; font-size: 0.9rem; margin: 0; border: none; cursor: pointer;">Logout</button>
                     </div>
                 </div>
@@ -202,6 +203,8 @@
     <!-- jsPDF & AutoTable CDNs for PDF export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
         // 1. Initialize Particles Background
@@ -401,10 +404,52 @@
             if (pdfBtn) {
                 pdfBtn.addEventListener('click', downloadPDF);
             }
+
+            // Excel Download Handler
+            const excelBtn = document.getElementById('admin-excel-btn');
+            if (excelBtn) {
+                excelBtn.addEventListener('click', downloadExcel);
+            }
         });
 
-        // 3b. PDF Exporter
-        function downloadPDF() {
+        // 3b. PDF & Excel Exporters
+        let cachedGujaratiFontBase64 = null;
+
+        async function downloadPDF() {
+            const pdfBtn = document.getElementById('admin-pdf-btn');
+            const originalText = pdfBtn.innerText;
+            pdfBtn.disabled = true;
+            pdfBtn.innerText = "Loading Fonts...";
+
+            try {
+                if (!cachedGujaratiFontBase64) {
+                    const fontUrl = "https://raw.githubusercontent.com/googlefonts/noto-fonts/master/hinted/ttf/NotoSansGujarati/NotoSansGujarati-Regular.ttf";
+                    const response = await fetch(fontUrl);
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    const arrayBuffer = await response.arrayBuffer();
+                    
+                    // Convert arrayBuffer to Base64
+                    let binary = '';
+                    const bytes = new Uint8Array(arrayBuffer);
+                    const len = bytes.byteLength;
+                    for (let i = 0; i < len; i++) {
+                        binary += String.fromCharCode(bytes[i]);
+                    }
+                    cachedGujaratiFontBase64 = window.btoa(binary);
+                }
+                
+                generatePDFWithFont(cachedGujaratiFontBase64);
+            } catch (error) {
+                console.error("Error loading Gujarati font, falling back to standard Helvetica:", error);
+                alert("Could not load Gujarati font. Downloading PDF in default language style.");
+                generatePDFWithFont(null);
+            } finally {
+                pdfBtn.disabled = false;
+                pdfBtn.innerText = originalText;
+            }
+        }
+
+        function generatePDFWithFont(base64Font) {
             const filterQuery = document.getElementById('search-input').value.trim().toLowerCase();
             const filtered = registrationsData.filter(item => {
                 if (!filterQuery) return true;
@@ -424,8 +469,14 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('landscape'); // Landscape to fit all columns nicely
 
+            const fontName = base64Font ? "NotoSansGujarati" : "helvetica";
+            if (base64Font) {
+                doc.addFileToVFS("NotoSansGujarati.ttf", base64Font);
+                doc.addFont("NotoSansGujarati.ttf", "NotoSansGujarati", "normal");
+            }
+
             // Header info
-            doc.setFont("helvetica", "bold");
+            doc.setFont(fontName, "normal");
             doc.setFontSize(20);
             doc.setTextColor(230, 92, 0); // Saffron
             doc.text("YUVA SANGAM CONVENTION", 14, 18);
@@ -434,7 +485,7 @@
             doc.setTextColor(0, 43, 73); // Navy
             doc.text("Registered Participants Report", 14, 26);
 
-            doc.setFont("helvetica", "normal");
+            doc.setFont(fontName, "normal");
             doc.setFontSize(10);
             doc.setTextColor(100, 100, 100);
             const dateStr = new Date().toLocaleString();
@@ -476,10 +527,12 @@
                     fillColor: [230, 92, 0], // Saffron header
                     textColor: [255, 255, 255],
                     fontStyle: 'bold',
-                    fontSize: 10
+                    fontSize: 10,
+                    font: fontName
                 },
                 bodyStyles: {
-                    fontSize: 9
+                    fontSize: 9,
+                    font: fontName
                 },
                 alternateRowStyles: {
                     fillColor: [255, 252, 248]
@@ -490,6 +543,83 @@
             // Save the generated document
             const filename = `Yuva_Sangam_Participants_${new Date().toISOString().slice(0, 10)}.pdf`;
             doc.save(filename);
+        }
+
+        function downloadExcel() {
+            const filterQuery = document.getElementById('search-input').value.trim().toLowerCase();
+            const filtered = registrationsData.filter(item => {
+                if (!filterQuery) return true;
+                return item.name.toLowerCase().includes(filterQuery) ||
+                       item.contact.includes(filterQuery) ||
+                       item.address.toLowerCase().includes(filterQuery) ||
+                       item.gender.toLowerCase().includes(filterQuery) ||
+                       (item.subject && item.subject.toLowerCase().includes(filterQuery)) ||
+                       (item.occupation && item.occupation.toLowerCase().includes(filterQuery)) ||
+                       (item.email && item.email.toLowerCase().includes(filterQuery)) ||
+                       (item.rssQuestion && item.rssQuestion.toLowerCase().includes(filterQuery)) ||
+                       (item.reference && item.reference.toLowerCase().includes(filterQuery));
+            });
+
+            if (filtered.length === 0) {
+                alert("No data available to download.");
+                return;
+            }
+
+            // Create workbook and worksheet
+            const wb = XLSX.utils.book_new();
+            
+            // Format rows data
+            const excelRows = filtered.map((item, idx) => {
+                let regDate = '-';
+                if (item.timestamp) {
+                    if (typeof item.timestamp.toDate === 'function') {
+                        regDate = item.timestamp.toDate().toLocaleString();
+                    } else if (item.timestamp.seconds) {
+                        regDate = new Date(item.timestamp.seconds * 1000).toLocaleString();
+                    } else {
+                        regDate = new Date(item.timestamp).toLocaleString();
+                    }
+                }
+                
+                return {
+                    "S.No": idx + 1,
+                    "Full Name": item.name || '-',
+                    "Mobile Number": item.contact || '-',
+                    "Email Address": item.email || '-',
+                    "Gender": item.gender || '-',
+                    "Date of Birth": item.dob || '-',
+                    "Interest / Subject": item.subject || '-',
+                    "Education / Occupation": item.occupation || '-',
+                    "RSS Question": item.rssQuestion || '-',
+                    "Referred By": item.reference || '-',
+                    "Address": item.address || '-',
+                    "Registration Time": regDate
+                };
+            });
+
+            const ws = XLSX.utils.json_to_sheet(excelRows);
+
+            // Set column widths for better readability
+            const colWidths = [
+                { wch: 6 },   // S.No
+                { wch: 25 },  // Full Name
+                { wch: 15 },  // Mobile Number
+                { wch: 25 },  // Email
+                { wch: 10 },  // Gender
+                { wch: 15 },  // DOB
+                { wch: 30 },  // Interest/Subject
+                { wch: 25 },  // Education/Occupation
+                { wch: 35 },  // RSS Question
+                { wch: 20 },  // Reference
+                { wch: 40 },  // Address
+                { wch: 22 }   // Registration Time
+            ];
+            ws['!cols'] = colWidths;
+
+            XLSX.utils.book_append_sheet(wb, ws, "Participants");
+
+            const filename = `Yuva_Sangam_Participants_${new Date().toISOString().slice(0, 10)}.xlsx`;
+            XLSX.writeFile(wb, filename);
         }
 
         // 4. Dashboard View Controller
@@ -515,7 +645,7 @@
             container.innerHTML = `<div style="text-align: center; padding: 30px; font-size: 1.2rem; color: var(--text-muted);">Loading registrations...</div>`;
             inlineEditingDocId = null;
 
-            firebaseDBPromise.then((activeDB) => {
+             firebaseDBPromise.then((activeDB) => {
                 if (activeDB) {
                     activeDB.collection("registrations").orderBy("timestamp", "desc").get()
                         .then((querySnapshot) => {
@@ -526,13 +656,15 @@
                                     id: doc.id,
                                     name: data.name || '',
                                     contact: data.contact || '',
+                                    email: data.email || '',
                                     gender: data.gender || '',
                                     address: data.address || '',
                                     subject: data.subject || '',
                                     occupation: data.occupation || '',
                                     dob: data.dob || '',
                                     rssQuestion: data.rssQuestion || '',
-                                    reference: data.reference || ''
+                                    reference: data.reference || '',
+                                    timestamp: data.timestamp || null
                                 });
                             });
                             renderRegistrations();
@@ -550,9 +682,9 @@
                     let mockData = JSON.parse(localStorage.getItem('mock_registrations'));
                     if (!mockData) {
                         mockData = [
-                            { id: 'mock-1', name: 'Rohan Sharma', contact: '9876543210', gender: 'Male', address: '12, Gorwa Road, Vadodara', subject: '૧.સેવા', occupation: 'Student', rssQuestion: 'No questions', reference: 'Friend' },
-                            { id: 'mock-2', name: 'Priya Patel', contact: '8765432109', gender: 'Female', address: 'A-402, Samrajya Flat, Vadodara', subject: '૨.સંઘકાર્ય', occupation: 'Teacher', rssQuestion: 'How to participate in shivir?', reference: 'Social Media' },
-                            { id: 'mock-3', name: 'Jayesh Amit', contact: '7654321098', gender: 'Male', address: 'Subhanpura, Vadodara', subject: '૪.સ્વદેશી', occupation: 'Business', rssQuestion: '', reference: '' }
+                            { id: 'mock-1', name: 'Rohan Sharma', contact: '9876543210', email: 'rohan@example.com', gender: 'Male', address: '12, Gorwa Road, Vadodara', subject: '૧.સેવા', occupation: 'Student', dob: '2001-05-15', rssQuestion: 'No questions', reference: 'Friend', timestamp: new Date().toISOString() },
+                            { id: 'mock-2', name: 'Priya Patel', contact: '8765432109', email: 'priya@example.com', gender: 'Female', address: 'A-402, Samrajya Flat, Vadodara', subject: '૨.સંઘકાર્ય', occupation: 'Teacher', dob: '1998-11-22', rssQuestion: 'How to participate in shivir?', reference: 'Social Media', timestamp: new Date().toISOString() },
+                            { id: 'mock-3', name: 'Jayesh Amit', contact: '7654321098', email: 'jayesh@example.com', gender: 'Male', address: 'Subhanpura, Vadodara', subject: '૪.સ્વદેશી', occupation: 'Business', dob: '1995-02-10', rssQuestion: '', reference: '', timestamp: new Date().toISOString() }
                         ];
                         localStorage.setItem('mock_registrations', JSON.stringify(mockData));
                     }
