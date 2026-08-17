@@ -114,7 +114,8 @@ const translations = {
         "invite-detail-venue": "📍 <strong>Venue:</strong> Sapna na vavetar hall, Samta, Vadodara.",
         "invite-signature": "Courtesy: Gorwa Nagar Organisation",
         "invite-salute": "🚩 Jai Hind! Jai Bharat! 🚩",
-        "invite-back-btn": "Back to Home Page"
+        "invite-back-btn": "Back to Home Page",
+        "invite-whatsapp-btn": "Join WhatsApp Group"
     },
     gu: {
         // Nav
@@ -231,7 +232,8 @@ const translations = {
         "invite-detail-venue": "📍 <strong>સ્થાન:</strong> સપના ના વાવેતર હોલ, સમતા, વડોદરા",
         "invite-signature": "સૌજન્ય: ગોરવા નગર સંગઠન",
         "invite-salute": "🚩 જય હિન્દ! જય ભારત! 🚩",
-        "invite-back-btn": "મુખ્ય પૃષ્ઠ પર પાછા જાઓ"
+        "invite-back-btn": "મુખ્ય પૃષ્ઠ પર પાછા જાઓ",
+        "invite-whatsapp-btn": "WhatsApp ગ્રુપમાં જોડાઓ"
     },
     hi: {
         // Nav
@@ -348,7 +350,8 @@ const translations = {
         "invite-detail-venue": "📍 <strong>स्थान:</strong> सपना ना वावेतर हॉल, समता, वडोदरा",
         "invite-signature": "सौजन्य: गोरवा नगर संगठन",
         "invite-salute": "🚩 जय हिन्द! जय भारत! 🚩",
-        "invite-back-btn": "मुख्य पृष्ठ पर वापस जाएं"
+        "invite-back-btn": "मुख्य पृष्ठ पर वापस जाएं",
+        "invite-whatsapp-btn": "WhatsApp ग्रुप में शामिल हों"
     }
 };
 
